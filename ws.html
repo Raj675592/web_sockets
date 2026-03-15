@@ -1,0 +1,3052 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>ws.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="websockets-a%E2%80%93z-the-complete-nodejs-tutorial">WebSockets A–Z: The Complete Node.js Tutorial</h1>
+<blockquote>
+<p>A thorough, end-to-end guide to WebSockets using Node.js — from the protocol fundamentals to production-ready patterns.</p>
+</blockquote>
+<hr>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ol>
+<li><a href="#1-what-are-websockets">What Are WebSockets?</a></li>
+<li><a href="#2-http-vs-websockets-vs-other-techniques">HTTP vs WebSockets vs Other Techniques</a></li>
+<li><a href="#3-the-websocket-protocol-deep-dive">The WebSocket Protocol Deep Dive</a></li>
+<li><a href="#4-environment-setup">Environment Setup</a></li>
+<li><a href="#5-raw-websocket-server-with-nodejs-net-module">Raw WebSocket Server with Node.js <code>net</code> Module</a></li>
+<li><a href="#6-using-the-ws-library">Using the <code>ws</code> Library</a></li>
+<li><a href="#7-websocket-client-api-in-the-browser">WebSocket Client API in the Browser</a></li>
+<li><a href="#8-websocket-lifecycle--events">WebSocket Lifecycle &amp; Events</a></li>
+<li><a href="#9-sending--receiving-data">Sending &amp; Receiving Data</a></li>
+<li><a href="#10-building-a-chat-application">Building a Chat Application</a></li>
+<li><a href="#11-broadcasting--rooms">Broadcasting &amp; Rooms</a></li>
+<li><a href="#12-heartbeats-pingpong--keep-alive">Heartbeats, Ping/Pong &amp; Keep-Alive</a></li>
+<li><a href="#13-reconnection-logic-on-the-client">Reconnection Logic on the Client</a></li>
+<li><a href="#14-authentication--authorization">Authentication &amp; Authorization</a></li>
+<li><a href="#15-websocket-with-expressjs">WebSocket with Express.js</a></li>
+<li><a href="#16-using-socketio">Using Socket.IO</a></li>
+<li><a href="#17-binary-data--streams">Binary Data &amp; Streams</a></li>
+<li><a href="#18-rate-limiting--backpressure">Rate Limiting &amp; Backpressure</a></li>
+<li><a href="#19-scaling-websockets-redispubsub">Scaling WebSockets (Redis Pub/Sub)</a></li>
+<li><a href="#20-error-handling--debugging">Error Handling &amp; Debugging</a></li>
+<li><a href="#21-security-best-practices">Security Best Practices</a></li>
+<li><a href="#22-testing-websocket-servers">Testing WebSocket Servers</a></li>
+<li><a href="#23-production-deployment-nginx-pm2-docker">Production Deployment (Nginx, PM2, Docker)</a></li>
+<li><a href="#24-performance-tuning">Performance Tuning</a></li>
+<li><a href="#25-quick-reference-cheat-sheet">Quick Reference Cheat Sheet</a></li>
+</ol>
+<hr>
+<h2 id="1-what-are-websockets">1. What Are WebSockets?</h2>
+<p><strong>WebSocket</strong> is a standardized communication protocol (RFC 6455) that provides a <strong>full-duplex, persistent channel</strong> over a single TCP connection. Both the client and server can send data to each other <strong>at any time</strong>, without waiting for a request.</p>
+<h3 id="why-were-websockets-invented">Why Were WebSockets Invented?</h3>
+<p>Before WebSockets, developers used hacks like:</p>
+<ul>
+<li><strong>Polling</strong> — client asks server every N seconds (&quot;Any news?&quot;)</li>
+<li><strong>Long-polling</strong> — client sends a request, server holds it until new data arrives</li>
+<li><strong>Server-Sent Events</strong> — server can push, but client cannot respond on the same channel</li>
+</ul>
+<p>WebSockets solve all of this with a <strong>true two-way channel</strong>.</p>
+<h3 id="core-properties">Core Properties</h3>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Persistent</strong></td>
+<td>Connection stays open; no repeated TCP handshakes</td>
+</tr>
+<tr>
+<td><strong>Full-duplex</strong></td>
+<td>Client and server talk simultaneously</td>
+</tr>
+<tr>
+<td><strong>Low latency</strong></td>
+<td>No HTTP overhead after the initial handshake</td>
+</tr>
+<tr>
+<td><strong>Lightweight frames</strong></td>
+<td>2–14 bytes of overhead per message vs hundreds for HTTP</td>
+</tr>
+<tr>
+<td><strong>Text &amp; Binary</strong></td>
+<td>Supports UTF-8 text, JSON, Buffers, ArrayBuffers</td>
+</tr>
+</tbody>
+</table>
+<h3 id="real-world-use-cases">Real-World Use Cases</h3>
+<ul>
+<li>Live chat (WhatsApp Web, Slack)</li>
+<li>Collaborative documents (Google Docs-style)</li>
+<li>Online multiplayer games</li>
+<li>Real-time dashboards &amp; analytics</li>
+<li>Financial tickers (stocks, crypto)</li>
+<li>Live sports scores &amp; commentary</li>
+<li>IoT sensor data streaming</li>
+<li>Live notifications &amp; alerts</li>
+<li>Video/audio signaling (WebRTC signaling layer)</li>
+</ul>
+<hr>
+<h2 id="2-http-vs-websockets-vs-other-techniques">2. HTTP vs WebSockets vs Other Techniques</h2>
+<h3 id="http-request%E2%80%93response">HTTP Request–Response</h3>
+<p>Every interaction requires the client to initiate:</p>
+<pre class="hljs"><code><div>Client ──── GET /messages ────► Server
+Client ◄─── 200 OK ───────────── Server   (connection closed)
+
+Client ──── GET /messages ────► Server   (must ask again!)
+Client ◄─── 200 OK ───────────── Server
+</div></code></pre>
+<p><strong>Problem:</strong> Server can never push data unprompted. Inefficient for real-time needs.</p>
+<hr>
+<h3 id="polling">Polling</h3>
+<pre class="hljs"><code><div>Client ──── GET /updates ────► Server  (every 2 seconds)
+Client ◄─── 200 [] ──────────── Server  (empty most of the time)
+Client ──── GET /updates ────► Server
+Client ◄─── 200 [] ──────────── Server
+Client ──── GET /updates ────► Server
+Client ◄─── 200 [new msg!] ─── Server
+</div></code></pre>
+<p><strong>Problem:</strong> Wastes bandwidth. Latency equals the polling interval.</p>
+<hr>
+<h3 id="long-polling">Long-Polling</h3>
+<pre class="hljs"><code><div>Client ──── GET /updates ─────────────► Server
+                                         (server holds the connection...)
+Client ◄─── 200 [new msg!] ─────────── Server  (when something happens)
+
+Client ──── GET /updates ─────────────► Server  (immediately reconnects)
+</div></code></pre>
+<p><strong>Better</strong>, but still HTTP overhead per cycle. Server must manage many hanging connections.</p>
+<hr>
+<h3 id="server-sent-events-sse">Server-Sent Events (SSE)</h3>
+<pre class="hljs"><code><div>Client ──── GET /events ────► Server
+Client ◄──────────────────── Server: event: msg\ndata: hello\n\n
+Client ◄──────────────────── Server: event: msg\ndata: world\n\n
+</div></code></pre>
+<p><strong>One-directional push</strong> from server to client only. Client cannot send back on the same channel.</p>
+<hr>
+<h3 id="websockets-%E2%9C%85">WebSockets ✅</h3>
+<pre class="hljs"><code><div>Client ──── HTTP Upgrade ────► Server
+Client ◄─── 101 Switching ──── Server  (handshake complete)
+
+Client ◄──────────────────────► Server  (full-duplex, persistent)
+         ← any side sends anytime →
+</div></code></pre>
+<p><strong>Best for:</strong> Bidirectional, low-latency, real-time communication.</p>
+<h3 id="comparison-table">Comparison Table</h3>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Polling</th>
+<th>Long-Poll</th>
+<th>SSE</th>
+<th>WebSocket</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bidirectional</td>
+<td>❌</td>
+<td>❌</td>
+<td>❌</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Server Push</td>
+<td>❌</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Low Latency</td>
+<td>❌</td>
+<td>⚠️</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Low Overhead</td>
+<td>❌</td>
+<td>❌</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Native Browser</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>HTTP/2 Compat</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>⚠️</td>
+</tr>
+<tr>
+<td>Complexity</td>
+<td>Low</td>
+<td>Medium</td>
+<td>Low</td>
+<td>Medium</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="3-the-websocket-protocol-deep-dive">3. The WebSocket Protocol Deep Dive</h2>
+<h3 id="the-opening-handshake">The Opening Handshake</h3>
+<p>WebSocket begins as a standard HTTP/1.1 request and upgrades:</p>
+<p><strong>Client sends:</strong></p>
+<pre class="hljs"><code><div><span class="hljs-keyword">GET</span> <span class="hljs-string">/chat</span> HTTP/1.1
+<span class="hljs-attribute">Host</span>: example.com
+<span class="hljs-attribute">Upgrade</span>: websocket
+<span class="hljs-attribute">Connection</span>: Upgrade
+<span class="hljs-attribute">Sec-WebSocket-Key</span>: dGhlIHNhbXBsZSBub25jZQ==
+<span class="hljs-attribute">Sec-WebSocket-Version</span>: 13
+<span class="hljs-attribute">Origin</span>: http://example.com
+</div></code></pre>
+<p><strong>Server responds:</strong></p>
+<pre class="hljs"><code><div>HTTP/1.1 <span class="hljs-number">101</span> Switching Protocols
+<span class="hljs-attribute">Upgrade</span>: websocket
+<span class="hljs-attribute">Connection</span>: Upgrade
+<span class="hljs-attribute">Sec-WebSocket-Accept</span>: s3pPLMBiTxaQ9kYGzzhZRbK+xOo=
+</div></code></pre>
+<ul>
+<li><code>Sec-WebSocket-Key</code> — random base64 nonce from client</li>
+<li><code>Sec-WebSocket-Accept</code> — server hashes the key with a magic GUID using SHA-1, then base64-encodes it</li>
+<li>After <code>101</code>, the connection is no longer HTTP — it's a raw WebSocket channel</li>
+</ul>
+<h3 id="key-derivation-how-the-accept-header-is-computed">Key Derivation (How the Accept Header Is Computed)</h3>
+<pre class="hljs"><code><div>accept = base64(SHA1(key + &quot;258EAFA5-E914-47DA-95CA-C5AB0DC85B11&quot;))
+</div></code></pre>
+<h3 id="websocket-frame-format">WebSocket Frame Format</h3>
+<p>After the handshake, data travels in <strong>frames</strong>:</p>
+<pre class="hljs"><code><div> 0                   1                   2                   3
+ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
++-+-+-+-+-------+-+-------------+-------------------------------+
+|F|R|R|R| opcode|M| Payload len |    Extended payload length    |
+|I|S|S|S|  (4)  |A|     (7)     |             (16/64)           |
+|N|V|V|V|       |S|             |   (if payload len==126/127)   |
+| |1|2|3|       |K|             |                               |
++-+-+-+-+-------+-+-------------+ - - - - - - - - - - - - - - -+
+|     Extended payload length continued, if payload len == 127  |
++ - - - - - - - - - - - - - - -+-------------------------------+
+|                               |Masking-key, if MASK set to 1  |
++-------------------------------+-------------------------------+
+| Masking-key (continued)       |          Payload Data         |
++-------------------------------- - - - - - - - - - - - - - - -+
+:                     Payload Data continued ...                :
++---------------------------------------------------------------+
+</div></code></pre>
+<h3 id="opcodes">Opcodes</h3>
+<table>
+<thead>
+<tr>
+<th>Opcode</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>0x0</code></td>
+<td>Continuation frame</td>
+</tr>
+<tr>
+<td><code>0x1</code></td>
+<td>Text frame (UTF-8)</td>
+</tr>
+<tr>
+<td><code>0x2</code></td>
+<td>Binary frame</td>
+</tr>
+<tr>
+<td><code>0x8</code></td>
+<td>Connection close</td>
+</tr>
+<tr>
+<td><code>0x9</code></td>
+<td>Ping</td>
+</tr>
+<tr>
+<td><code>0xA</code></td>
+<td>Pong</td>
+</tr>
+</tbody>
+</table>
+<h3 id="close-handshake">Close Handshake</h3>
+<p>Either side sends a <strong>Close frame</strong> (opcode <code>0x8</code>) with an optional 2-byte status code and reason string. The other side echoes a Close frame and the TCP connection is terminated.</p>
+<h3 id="common-close-codes">Common Close Codes</h3>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1000</td>
+<td>Normal closure</td>
+</tr>
+<tr>
+<td>1001</td>
+<td>Going away (page navigating away)</td>
+</tr>
+<tr>
+<td>1002</td>
+<td>Protocol error</td>
+</tr>
+<tr>
+<td>1003</td>
+<td>Unsupported data</td>
+</tr>
+<tr>
+<td>1006</td>
+<td>Abnormal closure (no close frame)</td>
+</tr>
+<tr>
+<td>1007</td>
+<td>Invalid frame payload</td>
+</tr>
+<tr>
+<td>1008</td>
+<td>Policy violation</td>
+</tr>
+<tr>
+<td>1009</td>
+<td>Message too big</td>
+</tr>
+<tr>
+<td>1011</td>
+<td>Internal server error</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="4-environment-setup">4. Environment Setup</h2>
+<h3 id="prerequisites">Prerequisites</h3>
+<ul>
+<li>Node.js v18+ (LTS recommended)</li>
+<li>npm or yarn</li>
+<li>A terminal</li>
+<li>A modern browser (Chrome, Firefox, Edge)</li>
+</ul>
+<h3 id="project-initialization">Project Initialization</h3>
+<pre class="hljs"><code><div>mkdir websockets-tutorial
+<span class="hljs-built_in">cd</span> websockets-tutorial
+npm init -y
+</div></code></pre>
+<h3 id="install-core-dependencies">Install Core Dependencies</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Minimal WebSocket library</span>
+npm install ws
+
+<span class="hljs-comment"># For HTTP server integration</span>
+npm install express
+
+<span class="hljs-comment"># Socket.IO (full-featured, covered later)</span>
+npm install socket.io socket.io-client
+
+<span class="hljs-comment"># For auth examples</span>
+npm install jsonwebtoken
+
+<span class="hljs-comment"># Dev tools</span>
+npm install --save-dev nodemon
+</div></code></pre>
+<h3 id="recommended-project-structure">Recommended Project Structure</h3>
+<pre class="hljs"><code><div>websockets-tutorial/
+├── server/
+│   ├── index.js           # Main server entry
+│   ├── chat.js            # Chat server example
+│   ├── rooms.js           # Rooms/broadcast example
+│   ├── auth.js            # Auth example
+│   └── scaling.js         # Redis pub/sub example
+├── client/
+│   ├── index.html         # Browser client
+│   ├── chat.html          # Chat UI
+│   └── client.js          # Reconnect logic
+├── tests/
+│   └── ws.test.js
+├── package.json
+└── README.md
+</div></code></pre>
+<h3 id="add-a-dev-script-to-packagejson">Add a dev script to <code>package.json</code></h3>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"scripts"</span>: {
+    <span class="hljs-attr">"dev"</span>: <span class="hljs-string">"nodemon server/index.js"</span>,
+    <span class="hljs-attr">"start"</span>: <span class="hljs-string">"node server/index.js"</span>
+  }
+}
+</div></code></pre>
+<hr>
+<h2 id="5-raw-websocket-server-with-nodejs-net-module">5. Raw WebSocket Server with Node.js <code>net</code> Module</h2>
+<p>Before using a library, let's understand what happens under the hood by manually implementing the handshake. This is <strong>educational only</strong> — use <code>ws</code> for real projects.</p>
+<pre class="hljs"><code><div><span class="hljs-comment">// server/raw.js</span>
+<span class="hljs-keyword">const</span> net = <span class="hljs-built_in">require</span>(<span class="hljs-string">'net'</span>);
+<span class="hljs-keyword">const</span> crypto = <span class="hljs-built_in">require</span>(<span class="hljs-string">'crypto'</span>);
+
+<span class="hljs-keyword">const</span> MAGIC = <span class="hljs-string">'258EAFA5-E914-47DA-95CA-C5AB0DC85B11'</span>;
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">generateAcceptKey</span>(<span class="hljs-params">wsKey</span>) </span>{
+  <span class="hljs-keyword">return</span> crypto
+    .createHash(<span class="hljs-string">'sha1'</span>)
+    .update(wsKey + MAGIC)
+    .digest(<span class="hljs-string">'base64'</span>);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">parseHandshake</span>(<span class="hljs-params">data</span>) </span>{
+  <span class="hljs-keyword">const</span> headers = {};
+  <span class="hljs-keyword">const</span> lines = data.toString().split(<span class="hljs-string">'\r\n'</span>);
+  lines.slice(<span class="hljs-number">1</span>).forEach(<span class="hljs-function"><span class="hljs-params">line</span> =&gt;</span> {
+    <span class="hljs-keyword">const</span> [key, ...rest] = line.split(<span class="hljs-string">': '</span>);
+    <span class="hljs-keyword">if</span> (key) headers[key.toLowerCase()] = rest.join(<span class="hljs-string">': '</span>);
+  });
+  <span class="hljs-keyword">return</span> headers;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">decodeFrame</span>(<span class="hljs-params">buffer</span>) </span>{
+  <span class="hljs-keyword">const</span> firstByte = buffer[<span class="hljs-number">0</span>];
+  <span class="hljs-keyword">const</span> secondByte = buffer[<span class="hljs-number">1</span>];
+  <span class="hljs-keyword">const</span> opcode = firstByte &amp; <span class="hljs-number">0x0f</span>;
+  <span class="hljs-keyword">const</span> isMasked = !!(secondByte &amp; <span class="hljs-number">0x80</span>);
+
+  <span class="hljs-keyword">let</span> payloadLength = secondByte &amp; <span class="hljs-number">0x7f</span>;
+  <span class="hljs-keyword">let</span> maskStart = <span class="hljs-number">2</span>;
+
+  <span class="hljs-keyword">if</span> (payloadLength === <span class="hljs-number">126</span>) {
+    payloadLength = buffer.readUInt16BE(<span class="hljs-number">2</span>);
+    maskStart = <span class="hljs-number">4</span>;
+  } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (payloadLength === <span class="hljs-number">127</span>) {
+    payloadLength = buffer.readBigUInt64BE(<span class="hljs-number">2</span>);
+    maskStart = <span class="hljs-number">10</span>;
+  }
+
+  <span class="hljs-keyword">const</span> mask = isMasked ? buffer.slice(maskStart, maskStart + <span class="hljs-number">4</span>) : <span class="hljs-literal">null</span>;
+  <span class="hljs-keyword">const</span> dataStart = isMasked ? maskStart + <span class="hljs-number">4</span> : maskStart;
+  <span class="hljs-keyword">const</span> payload = buffer.slice(dataStart, dataStart + payloadLength);
+
+  <span class="hljs-keyword">if</span> (isMasked) {
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; payload.length; i++) {
+      payload[i] ^= mask[i % <span class="hljs-number">4</span>];
+    }
+  }
+
+  <span class="hljs-keyword">return</span> { opcode, <span class="hljs-attr">payload</span>: payload.toString(<span class="hljs-string">'utf8'</span>) };
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">encodeFrame</span>(<span class="hljs-params">message</span>) </span>{
+  <span class="hljs-keyword">const</span> payload = Buffer.from(message, <span class="hljs-string">'utf8'</span>);
+  <span class="hljs-keyword">const</span> length = payload.length;
+  <span class="hljs-keyword">let</span> frame;
+
+  <span class="hljs-keyword">if</span> (length &lt;= <span class="hljs-number">125</span>) {
+    frame = Buffer.allocUnsafe(<span class="hljs-number">2</span> + length);
+    frame[<span class="hljs-number">1</span>] = length;
+  } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (length &lt;= <span class="hljs-number">65535</span>) {
+    frame = Buffer.allocUnsafe(<span class="hljs-number">4</span> + length);
+    frame[<span class="hljs-number">1</span>] = <span class="hljs-number">126</span>;
+    frame.writeUInt16BE(length, <span class="hljs-number">2</span>);
+  } <span class="hljs-keyword">else</span> {
+    frame = Buffer.allocUnsafe(<span class="hljs-number">10</span> + length);
+    frame[<span class="hljs-number">1</span>] = <span class="hljs-number">127</span>;
+    frame.writeBigUInt64BE(BigInt(length), <span class="hljs-number">2</span>);
+  }
+
+  frame[<span class="hljs-number">0</span>] = <span class="hljs-number">0x81</span>; <span class="hljs-comment">// FIN + text opcode</span>
+  payload.copy(frame, frame.length - length);
+  <span class="hljs-keyword">return</span> frame;
+}
+
+<span class="hljs-keyword">const</span> server = net.createServer(<span class="hljs-function"><span class="hljs-params">socket</span> =&gt;</span> {
+  <span class="hljs-keyword">let</span> upgraded = <span class="hljs-literal">false</span>;
+
+  socket.on(<span class="hljs-string">'data'</span>, data =&gt; {
+    <span class="hljs-keyword">if</span> (!upgraded) {
+      <span class="hljs-comment">// Perform WebSocket handshake</span>
+      <span class="hljs-keyword">const</span> headers = parseHandshake(data);
+      <span class="hljs-keyword">const</span> wsKey = headers[<span class="hljs-string">'sec-websocket-key'</span>];
+      <span class="hljs-keyword">const</span> acceptKey = generateAcceptKey(wsKey);
+
+      <span class="hljs-keyword">const</span> response = [
+        <span class="hljs-string">'HTTP/1.1 101 Switching Protocols'</span>,
+        <span class="hljs-string">'Upgrade: websocket'</span>,
+        <span class="hljs-string">'Connection: Upgrade'</span>,
+        <span class="hljs-string">`Sec-WebSocket-Accept: <span class="hljs-subst">${acceptKey}</span>`</span>,
+        <span class="hljs-string">'\r\n'</span>
+      ].join(<span class="hljs-string">'\r\n'</span>);
+
+      socket.write(response);
+      upgraded = <span class="hljs-literal">true</span>;
+      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Client connected via raw WebSocket!'</span>);
+    } <span class="hljs-keyword">else</span> {
+      <span class="hljs-comment">// Decode and echo back</span>
+      <span class="hljs-keyword">const</span> { opcode, payload } = decodeFrame(data);
+      <span class="hljs-keyword">if</span> (opcode === <span class="hljs-number">0x8</span>) {
+        socket.end(); <span class="hljs-comment">// close frame</span>
+      } <span class="hljs-keyword">else</span> {
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Received:'</span>, payload);
+        socket.write(encodeFrame(<span class="hljs-string">`Echo: <span class="hljs-subst">${payload}</span>`</span>));
+      }
+    }
+  });
+
+  socket.on(<span class="hljs-string">'end'</span>, () =&gt; <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Client disconnected'</span>));
+  socket.on(<span class="hljs-string">'error'</span>, err =&gt; <span class="hljs-built_in">console</span>.error(<span class="hljs-string">'Socket error:'</span>, err.message));
+});
+
+server.listen(<span class="hljs-number">8080</span>, () =&gt; {
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Raw WebSocket server listening on ws://localhost:8080'</span>);
+});
+</div></code></pre>
+<blockquote>
+<p><strong>Note:</strong> This is intentionally minimal. A real WebSocket implementation handles fragmented messages, all opcodes, extension negotiation, and more. Use the <code>ws</code> library.</p>
+</blockquote>
+<hr>
+<h2 id="6-using-the-ws-library">6. Using the <code>ws</code> Library</h2>
+<p>The <code>ws</code> package is the de-facto standard low-level WebSocket library for Node.js.</p>
+<h3 id="basic-echo-server">Basic Echo Server</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// server/index.js</span>
+<span class="hljs-keyword">const</span> WebSocket = <span class="hljs-built_in">require</span>(<span class="hljs-string">'ws'</span>);
+
+<span class="hljs-keyword">const</span> wss = <span class="hljs-keyword">new</span> WebSocket.Server({ <span class="hljs-attr">port</span>: <span class="hljs-number">8080</span> });
+
+wss.on(<span class="hljs-string">'connection'</span>, (ws, req) =&gt; {
+  <span class="hljs-keyword">const</span> ip = req.socket.remoteAddress;
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`Client connected from <span class="hljs-subst">${ip}</span>`</span>);
+
+  <span class="hljs-comment">// Send a welcome message</span>
+  ws.send(<span class="hljs-built_in">JSON</span>.stringify({ <span class="hljs-attr">type</span>: <span class="hljs-string">'welcome'</span>, <span class="hljs-attr">message</span>: <span class="hljs-string">'Connected to WebSocket server!'</span> }));
+
+  <span class="hljs-comment">// Handle incoming messages</span>
+  ws.on(<span class="hljs-string">'message'</span>, (data, isBinary) =&gt; {
+    <span class="hljs-keyword">const</span> message = isBinary ? data : data.toString();
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`Received: <span class="hljs-subst">${message}</span>`</span>);
+
+    <span class="hljs-comment">// Echo back</span>
+    ws.send(<span class="hljs-built_in">JSON</span>.stringify({ <span class="hljs-attr">type</span>: <span class="hljs-string">'echo'</span>, <span class="hljs-attr">payload</span>: message }));
+  });
+
+  <span class="hljs-comment">// Handle disconnection</span>
+  ws.on(<span class="hljs-string">'close'</span>, (code, reason) =&gt; {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`Client disconnected. Code: <span class="hljs-subst">${code}</span>, Reason: <span class="hljs-subst">${reason}</span>`</span>);
+  });
+
+  <span class="hljs-comment">// Handle errors</span>
+  ws.on(<span class="hljs-string">'error'</span>, err =&gt; {
+    <span class="hljs-built_in">console</span>.error(<span class="hljs-string">'WebSocket error:'</span>, err.message);
+  });
+});
+
+wss.on(<span class="hljs-string">'listening'</span>, () =&gt; {
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'WebSocket server running on ws://localhost:8080'</span>);
+});
+
+wss.on(<span class="hljs-string">'error'</span>, err =&gt; {
+  <span class="hljs-built_in">console</span>.error(<span class="hljs-string">'Server error:'</span>, err);
+});
+</div></code></pre>
+<h3 id="websocketserver-constructor-options"><code>WebSocketServer</code> Constructor Options</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> wss = <span class="hljs-keyword">new</span> WebSocket.Server({
+  <span class="hljs-attr">port</span>: <span class="hljs-number">8080</span>,              <span class="hljs-comment">// Port to listen on</span>
+  <span class="hljs-attr">host</span>: <span class="hljs-string">'0.0.0.0'</span>,        <span class="hljs-comment">// Bind to all interfaces</span>
+  <span class="hljs-attr">path</span>: <span class="hljs-string">'/ws'</span>,            <span class="hljs-comment">// Only handle connections on this path</span>
+  <span class="hljs-attr">maxPayload</span>: <span class="hljs-number">1048576</span>,    <span class="hljs-comment">// Max message size in bytes (1 MB)</span>
+  <span class="hljs-attr">clientTracking</span>: <span class="hljs-literal">true</span>,   <span class="hljs-comment">// Track connected clients in wss.clients</span>
+  <span class="hljs-attr">perMessageDeflate</span>: {    <span class="hljs-comment">// Enable per-message compression</span>
+    <span class="hljs-attr">zlibDeflateOptions</span>: { <span class="hljs-attr">chunkSize</span>: <span class="hljs-number">1024</span>, <span class="hljs-attr">level</span>: <span class="hljs-number">3</span> },
+    <span class="hljs-attr">zlibInflateOptions</span>: { <span class="hljs-attr">chunkSize</span>: <span class="hljs-number">10</span> * <span class="hljs-number">1024</span> },
+    <span class="hljs-attr">threshold</span>: <span class="hljs-number">1024</span>       <span class="hljs-comment">// Only compress messages &gt; 1 KB</span>
+  }
+});
+</div></code></pre>
+<h3 id="attaching-to-an-existing-http-server">Attaching to an Existing HTTP Server</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> http = <span class="hljs-built_in">require</span>(<span class="hljs-string">'http'</span>);
+<span class="hljs-keyword">const</span> WebSocket = <span class="hljs-built_in">require</span>(<span class="hljs-string">'ws'</span>);
+
+<span class="hljs-keyword">const</span> server = http.createServer(<span class="hljs-function">(<span class="hljs-params">req, res</span>) =&gt;</span> {
+  res.writeHead(<span class="hljs-number">200</span>, { <span class="hljs-string">'Content-Type'</span>: <span class="hljs-string">'text/plain'</span> });
+  res.end(<span class="hljs-string">'HTTP server running'</span>);
+});
+
+<span class="hljs-keyword">const</span> wss = <span class="hljs-keyword">new</span> WebSocket.Server({ server }); <span class="hljs-comment">// shares port with HTTP</span>
+
+wss.on(<span class="hljs-string">'connection'</span>, ws =&gt; {
+  ws.send(<span class="hljs-string">'Hello from shared server!'</span>);
+});
+
+server.listen(<span class="hljs-number">3000</span>, () =&gt; {
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'HTTP + WS server on http://localhost:3000'</span>);
+});
+</div></code></pre>
+<h3 id="checking-client-state">Checking Client State</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// ws.readyState values:</span>
+WebSocket.CONNECTING  <span class="hljs-comment">// 0 - handshake in progress</span>
+WebSocket.OPEN        <span class="hljs-comment">// 1 - connection established</span>
+WebSocket.CLOSING     <span class="hljs-comment">// 2 - close handshake started</span>
+WebSocket.CLOSED      <span class="hljs-comment">// 3 - connection closed</span>
+
+<span class="hljs-comment">// Always check before sending:</span>
+<span class="hljs-keyword">if</span> (ws.readyState === WebSocket.OPEN) {
+  ws.send(<span class="hljs-string">'safe to send'</span>);
+}
+</div></code></pre>
+<hr>
+<h2 id="7-websocket-client-api-in-the-browser">7. WebSocket Client API in the Browser</h2>
+<h3 id="connecting">Connecting</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// Unsecure (development)</span>
+<span class="hljs-keyword">const</span> ws = <span class="hljs-keyword">new</span> WebSocket(<span class="hljs-string">'ws://localhost:8080'</span>);
+
+<span class="hljs-comment">// Secure (production — always use wss:// in production)</span>
+<span class="hljs-keyword">const</span> ws = <span class="hljs-keyword">new</span> WebSocket(<span class="hljs-string">'wss://example.com/ws'</span>);
+
+<span class="hljs-comment">// With sub-protocols</span>
+<span class="hljs-keyword">const</span> ws = <span class="hljs-keyword">new</span> WebSocket(<span class="hljs-string">'wss://example.com/ws'</span>, [<span class="hljs-string">'json'</span>, <span class="hljs-string">'v2'</span>]);
+</div></code></pre>
+<h3 id="listening-for-events">Listening for Events</h3>
+<pre class="hljs"><code><div>ws.onopen = <span class="hljs-function">(<span class="hljs-params">event</span>) =&gt;</span> {
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Connection established'</span>);
+  ws.send(<span class="hljs-built_in">JSON</span>.stringify({ <span class="hljs-attr">type</span>: <span class="hljs-string">'hello'</span>, <span class="hljs-attr">from</span>: <span class="hljs-string">'browser'</span> }));
+};
+
+ws.onmessage = <span class="hljs-function">(<span class="hljs-params">event</span>) =&gt;</span> {
+  <span class="hljs-keyword">const</span> data = <span class="hljs-built_in">JSON</span>.parse(event.data);
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Message received:'</span>, data);
+};
+
+ws.onclose = <span class="hljs-function">(<span class="hljs-params">event</span>) =&gt;</span> {
+  <span class="hljs-comment">// event.wasClean — true if the close was clean</span>
+  <span class="hljs-comment">// event.code    — close code (e.g. 1000)</span>
+  <span class="hljs-comment">// event.reason  — human-readable reason</span>
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`Closed: <span class="hljs-subst">${event.code}</span> <span class="hljs-subst">${event.reason}</span>`</span>);
+};
+
+ws.onerror = <span class="hljs-function">(<span class="hljs-params">event</span>) =&gt;</span> {
+  <span class="hljs-comment">// Note: the browser gives very little error info for security reasons</span>
+  <span class="hljs-built_in">console</span>.error(<span class="hljs-string">'WebSocket error. Check the Network tab.'</span>);
+};
+</div></code></pre>
+<h3 id="eventlistener-syntax-alternative">EventListener syntax (alternative)</h3>
+<pre class="hljs"><code><div>ws.addEventListener(<span class="hljs-string">'open'</span>, () =&gt; { <span class="hljs-comment">/* ... */</span> });
+ws.addEventListener(<span class="hljs-string">'message'</span>, (e) =&gt; { <span class="hljs-comment">/* ... */</span> });
+ws.addEventListener(<span class="hljs-string">'close'</span>, (e) =&gt; { <span class="hljs-comment">/* ... */</span> });
+ws.addEventListener(<span class="hljs-string">'error'</span>, (e) =&gt; { <span class="hljs-comment">/* ... */</span> });
+</div></code></pre>
+<h3 id="sending-data">Sending Data</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// Text</span>
+ws.send(<span class="hljs-string">'Hello!'</span>);
+
+<span class="hljs-comment">// JSON</span>
+ws.send(<span class="hljs-built_in">JSON</span>.stringify({ <span class="hljs-attr">action</span>: <span class="hljs-string">'subscribe'</span>, <span class="hljs-attr">channel</span>: <span class="hljs-string">'prices'</span> }));
+
+<span class="hljs-comment">// Binary: ArrayBuffer</span>
+<span class="hljs-keyword">const</span> buffer = <span class="hljs-keyword">new</span> <span class="hljs-built_in">ArrayBuffer</span>(<span class="hljs-number">4</span>);
+<span class="hljs-keyword">const</span> view = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Int32Array</span>(buffer);
+view[<span class="hljs-number">0</span>] = <span class="hljs-number">42</span>;
+ws.send(buffer);
+
+<span class="hljs-comment">// Binary: Blob</span>
+<span class="hljs-keyword">const</span> blob = <span class="hljs-keyword">new</span> Blob([<span class="hljs-string">'hello'</span>], { <span class="hljs-attr">type</span>: <span class="hljs-string">'text/plain'</span> });
+ws.send(blob);
+</div></code></pre>
+<h3 id="closing-the-connection">Closing the Connection</h3>
+<pre class="hljs"><code><div>ws.close();               <span class="hljs-comment">// Code 1000, no reason</span>
+ws.close(<span class="hljs-number">1000</span>, <span class="hljs-string">'Done'</span>);  <span class="hljs-comment">// Normal closure with reason</span>
+</div></code></pre>
+<h3 id="checking-state">Checking State</h3>
+<pre class="hljs"><code><div>ws.readyState === WebSocket.CONNECTING  <span class="hljs-comment">// 0</span>
+ws.readyState === WebSocket.OPEN        <span class="hljs-comment">// 1</span>
+ws.readyState === WebSocket.CLOSING     <span class="hljs-comment">// 2</span>
+ws.readyState === WebSocket.CLOSED      <span class="hljs-comment">// 3</span>
+</div></code></pre>
+<hr>
+<h2 id="8-websocket-lifecycle--events">8. WebSocket Lifecycle &amp; Events</h2>
+<h3 id="full-lifecycle-diagram">Full Lifecycle Diagram</h3>
+<pre class="hljs"><code><div>Browser                          Node.js Server
+   |                                    |
+   |--- TCP SYN --------------------&gt;   |
+   |&lt;-- TCP SYN-ACK -----------------  |
+   |--- TCP ACK --------------------&gt;   |
+   |                                    |
+   |--- HTTP GET /ws (Upgrade) -----&gt;   |
+   |&lt;-- HTTP 101 Switching ----------   |   [connection event fires]
+   |                                    |
+   |--- WS Frame (text) ------------&gt;   |   [message event fires]
+   |&lt;-- WS Frame (text) -------------  |
+   |                                    |
+   |&lt;-- WS Ping ---------------------  |   [ping event fires]
+   |--- WS Pong --------------------&gt;   |   [pong event fires]
+   |                                    |
+   |--- WS Close (1000) ------------&gt;   |   [close event fires]
+   |&lt;-- WS Close (1000) -------------  |
+   |                                    |
+   |--- TCP FIN --------------------&gt;   |
+   |&lt;-- TCP FIN-ACK -----------------  |
+</div></code></pre>
+<h3 id="server-side-events-ws-library">Server-Side Events (ws library)</h3>
+<pre class="hljs"><code><div>wss.on(<span class="hljs-string">'connection'</span>, (ws, req) =&gt; {
+  <span class="hljs-comment">// Fires when a client completes the handshake</span>
+
+  ws.on(<span class="hljs-string">'message'</span>, (data, isBinary) =&gt; {
+    <span class="hljs-comment">// Fires for each incoming message</span>
+  });
+
+  ws.on(<span class="hljs-string">'close'</span>, (code, reason) =&gt; {
+    <span class="hljs-comment">// Fires when the connection closes</span>
+  });
+
+  ws.on(<span class="hljs-string">'error'</span>, (err) =&gt; {
+    <span class="hljs-comment">// Fires on socket-level errors</span>
+  });
+
+  ws.on(<span class="hljs-string">'ping'</span>, (data) =&gt; {
+    <span class="hljs-comment">// Fires when a ping frame is received</span>
+    <span class="hljs-comment">// ws auto-responds with pong by default</span>
+  });
+
+  ws.on(<span class="hljs-string">'pong'</span>, (data) =&gt; {
+    <span class="hljs-comment">// Fires when a pong frame is received</span>
+  });
+
+  ws.on(<span class="hljs-string">'unexpected-response'</span>, (req, res) =&gt; {
+    <span class="hljs-comment">// Fires if server doesn't respond with 101</span>
+  });
+
+  ws.on(<span class="hljs-string">'upgrade'</span>, (response) =&gt; {
+    <span class="hljs-comment">// Fires when the upgrade handshake completes</span>
+  });
+});
+</div></code></pre>
+<hr>
+<h2 id="9-sending--receiving-data">9. Sending &amp; Receiving Data</h2>
+<h3 id="sending-with-callbacks-and-promises">Sending with Callbacks and Promises</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// With callback</span>
+ws.send(<span class="hljs-string">'message'</span>, (err) =&gt; {
+  <span class="hljs-keyword">if</span> (err) <span class="hljs-built_in">console</span>.error(<span class="hljs-string">'Send failed:'</span>, err);
+});
+
+<span class="hljs-comment">// Promisified helper</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">sendAsync</span>(<span class="hljs-params">ws, data</span>) </span>{
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resolve, reject</span>) =&gt;</span> {
+    <span class="hljs-keyword">if</span> (ws.readyState !== WebSocket.OPEN) {
+      <span class="hljs-keyword">return</span> reject(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'Connection is not open'</span>));
+    }
+    <span class="hljs-keyword">const</span> payload = <span class="hljs-keyword">typeof</span> data === <span class="hljs-string">'object'</span> ? <span class="hljs-built_in">JSON</span>.stringify(data) : data;
+    ws.send(payload, (err) =&gt; {
+      <span class="hljs-keyword">if</span> (err) reject(err);
+      <span class="hljs-keyword">else</span> resolve();
+    });
+  });
+}
+
+<span class="hljs-comment">// Usage</span>
+<span class="hljs-keyword">await</span> sendAsync(ws, { <span class="hljs-attr">type</span>: <span class="hljs-string">'msg'</span>, <span class="hljs-attr">text</span>: <span class="hljs-string">'Hello!'</span> });
+</div></code></pre>
+<h3 id="message-protocol-design">Message Protocol Design</h3>
+<p>Use a structured envelope for all messages:</p>
+<pre class="hljs"><code><div><span class="hljs-comment">// Define message types</span>
+<span class="hljs-keyword">const</span> MessageType = {
+  <span class="hljs-attr">CHAT</span>:         <span class="hljs-string">'chat'</span>,
+  <span class="hljs-attr">JOIN</span>:         <span class="hljs-string">'join'</span>,
+  <span class="hljs-attr">LEAVE</span>:        <span class="hljs-string">'leave'</span>,
+  <span class="hljs-attr">TYPING</span>:       <span class="hljs-string">'typing'</span>,
+  <span class="hljs-attr">PING</span>:         <span class="hljs-string">'ping'</span>,
+  <span class="hljs-attr">PONG</span>:         <span class="hljs-string">'pong'</span>,
+  <span class="hljs-attr">ERROR</span>:        <span class="hljs-string">'error'</span>,
+  <span class="hljs-attr">SUBSCRIBE</span>:    <span class="hljs-string">'subscribe'</span>,
+  <span class="hljs-attr">UNSUBSCRIBE</span>:  <span class="hljs-string">'unsubscribe'</span>,
+};
+
+<span class="hljs-comment">// Message envelope</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">createMessage</span>(<span class="hljs-params">type, payload, meta = {}</span>) </span>{
+  <span class="hljs-keyword">return</span> <span class="hljs-built_in">JSON</span>.stringify({
+    type,
+    payload,
+    <span class="hljs-attr">timestamp</span>: <span class="hljs-built_in">Date</span>.now(),
+    ...meta,
+  });
+}
+
+<span class="hljs-comment">// Parse incoming messages safely</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">parseMessage</span>(<span class="hljs-params">raw</span>) </span>{
+  <span class="hljs-keyword">try</span> {
+    <span class="hljs-keyword">const</span> data = <span class="hljs-built_in">JSON</span>.parse(raw.toString());
+    <span class="hljs-keyword">if</span> (!data.type) <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'Missing type field'</span>);
+    <span class="hljs-keyword">return</span> data;
+  } <span class="hljs-keyword">catch</span> (err) {
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>; <span class="hljs-comment">// Malformed message</span>
+  }
+}
+
+<span class="hljs-comment">// Server-side router</span>
+ws.on(<span class="hljs-string">'message'</span>, (raw) =&gt; {
+  <span class="hljs-keyword">const</span> msg = parseMessage(raw);
+  <span class="hljs-keyword">if</span> (!msg) <span class="hljs-keyword">return</span> ws.send(createMessage(<span class="hljs-string">'error'</span>, <span class="hljs-string">'Invalid JSON'</span>));
+
+  <span class="hljs-keyword">switch</span> (msg.type) {
+    <span class="hljs-keyword">case</span> MessageType.CHAT:    handleChat(ws, msg.payload);    <span class="hljs-keyword">break</span>;
+    <span class="hljs-keyword">case</span> MessageType.JOIN:    handleJoin(ws, msg.payload);    <span class="hljs-keyword">break</span>;
+    <span class="hljs-keyword">case</span> MessageType.TYPING:  handleTyping(ws, msg.payload);  <span class="hljs-keyword">break</span>;
+    <span class="hljs-keyword">case</span> MessageType.PING:    ws.send(createMessage(<span class="hljs-string">'pong'</span>, <span class="hljs-literal">null</span>)); <span class="hljs-keyword">break</span>;
+    <span class="hljs-keyword">default</span>:
+      ws.send(createMessage(<span class="hljs-string">'error'</span>, <span class="hljs-string">`Unknown type: <span class="hljs-subst">${msg.type}</span>`</span>));
+  }
+});
+</div></code></pre>
+<h3 id="receiving-binary-data-nodejs-server">Receiving Binary Data (Node.js server)</h3>
+<pre class="hljs"><code><div>ws.on(<span class="hljs-string">'message'</span>, (data, isBinary) =&gt; {
+  <span class="hljs-keyword">if</span> (isBinary) {
+    <span class="hljs-comment">// data is a Buffer</span>
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Binary length:'</span>, data.length);
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'First byte:'</span>, data[<span class="hljs-number">0</span>]);
+    <span class="hljs-comment">// Process: image upload, audio, etc.</span>
+  } <span class="hljs-keyword">else</span> {
+    <span class="hljs-comment">// data is a Buffer of UTF-8 text</span>
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Text:'</span>, data.toString());
+  }
+});
+</div></code></pre>
+<hr>
+<h2 id="10-building-a-chat-application">10. Building a Chat Application</h2>
+<h3 id="server--serverchatjs">Server — <code>server/chat.js</code></h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> http = <span class="hljs-built_in">require</span>(<span class="hljs-string">'http'</span>);
+<span class="hljs-keyword">const</span> WebSocket = <span class="hljs-built_in">require</span>(<span class="hljs-string">'ws'</span>);
+<span class="hljs-keyword">const</span> { <span class="hljs-attr">v4</span>: uuidv4 } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'uuid'</span>); <span class="hljs-comment">// npm install uuid</span>
+
+<span class="hljs-keyword">const</span> server = http.createServer();
+<span class="hljs-keyword">const</span> wss = <span class="hljs-keyword">new</span> WebSocket.Server({ server });
+
+<span class="hljs-comment">// Store connected clients with metadata</span>
+<span class="hljs-keyword">const</span> clients = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Map</span>(); <span class="hljs-comment">// ws -&gt; { id, username, joinedAt }</span>
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">broadcast</span>(<span class="hljs-params">data, excludeWs = null</span>) </span>{
+  <span class="hljs-keyword">const</span> msg = <span class="hljs-built_in">JSON</span>.stringify(data);
+  wss.clients.forEach(<span class="hljs-function"><span class="hljs-params">client</span> =&gt;</span> {
+    <span class="hljs-keyword">if</span> (client !== excludeWs &amp;&amp; client.readyState === WebSocket.OPEN) {
+      client.send(msg);
+    }
+  });
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">sendTo</span>(<span class="hljs-params">ws, data</span>) </span>{
+  <span class="hljs-keyword">if</span> (ws.readyState === WebSocket.OPEN) {
+    ws.send(<span class="hljs-built_in">JSON</span>.stringify(data));
+  }
+}
+
+wss.on(<span class="hljs-string">'connection'</span>, (ws) =&gt; {
+  <span class="hljs-keyword">const</span> clientId = uuidv4();
+  clients.set(ws, { <span class="hljs-attr">id</span>: clientId, <span class="hljs-attr">username</span>: <span class="hljs-literal">null</span>, <span class="hljs-attr">joinedAt</span>: <span class="hljs-built_in">Date</span>.now() });
+
+  <span class="hljs-comment">// Request username</span>
+  sendTo(ws, { <span class="hljs-attr">type</span>: <span class="hljs-string">'request_username'</span>, <span class="hljs-attr">message</span>: <span class="hljs-string">'Please send your username'</span> });
+
+  ws.on(<span class="hljs-string">'message'</span>, (raw) =&gt; {
+    <span class="hljs-keyword">let</span> msg;
+    <span class="hljs-keyword">try</span> {
+      msg = <span class="hljs-built_in">JSON</span>.parse(raw.toString());
+    } <span class="hljs-keyword">catch</span> {
+      <span class="hljs-keyword">return</span> sendTo(ws, { <span class="hljs-attr">type</span>: <span class="hljs-string">'error'</span>, <span class="hljs-attr">message</span>: <span class="hljs-string">'Invalid JSON'</span> });
+    }
+
+    <span class="hljs-keyword">const</span> client = clients.get(ws);
+
+    <span class="hljs-keyword">switch</span> (msg.type) {
+      <span class="hljs-keyword">case</span> <span class="hljs-string">'set_username'</span>: {
+        <span class="hljs-keyword">const</span> username = msg.username?.trim();
+        <span class="hljs-keyword">if</span> (!username || username.length &lt; <span class="hljs-number">2</span>) {
+          <span class="hljs-keyword">return</span> sendTo(ws, { <span class="hljs-attr">type</span>: <span class="hljs-string">'error'</span>, <span class="hljs-attr">message</span>: <span class="hljs-string">'Username must be at least 2 characters'</span> });
+        }
+
+        <span class="hljs-comment">// Check for duplicate usernames</span>
+        <span class="hljs-keyword">const</span> taken = [...clients.values()].some(<span class="hljs-function"><span class="hljs-params">c</span> =&gt;</span> c.username === username);
+        <span class="hljs-keyword">if</span> (taken) {
+          <span class="hljs-keyword">return</span> sendTo(ws, { <span class="hljs-attr">type</span>: <span class="hljs-string">'error'</span>, <span class="hljs-attr">message</span>: <span class="hljs-string">'Username already taken'</span> });
+        }
+
+        clients.set(ws, { ...client, username });
+
+        sendTo(ws, {
+          <span class="hljs-attr">type</span>: <span class="hljs-string">'joined'</span>,
+          <span class="hljs-attr">message</span>: <span class="hljs-string">`Welcome, <span class="hljs-subst">${username}</span>! There are <span class="hljs-subst">${wss.clients.size}</span> user(s) online.`</span>,
+          <span class="hljs-attr">onlineCount</span>: wss.clients.size,
+        });
+
+        broadcast({ <span class="hljs-attr">type</span>: <span class="hljs-string">'user_joined'</span>, username, <span class="hljs-attr">onlineCount</span>: wss.clients.size }, ws);
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`<span class="hljs-subst">${username}</span> joined the chat`</span>);
+        <span class="hljs-keyword">break</span>;
+      }
+
+      <span class="hljs-keyword">case</span> <span class="hljs-string">'chat'</span>: {
+        <span class="hljs-keyword">if</span> (!client.username) {
+          <span class="hljs-keyword">return</span> sendTo(ws, { <span class="hljs-attr">type</span>: <span class="hljs-string">'error'</span>, <span class="hljs-attr">message</span>: <span class="hljs-string">'Set a username first'</span> });
+        }
+        <span class="hljs-keyword">if</span> (!msg.text?.trim()) <span class="hljs-keyword">return</span>;
+
+        <span class="hljs-keyword">const</span> chatMsg = {
+          <span class="hljs-attr">type</span>: <span class="hljs-string">'chat'</span>,
+          <span class="hljs-attr">id</span>: uuidv4(),
+          <span class="hljs-attr">username</span>: client.username,
+          <span class="hljs-attr">text</span>: msg.text.trim().slice(<span class="hljs-number">0</span>, <span class="hljs-number">1000</span>), <span class="hljs-comment">// Truncate long messages</span>
+          <span class="hljs-attr">timestamp</span>: <span class="hljs-built_in">Date</span>.now(),
+        };
+
+        broadcast(chatMsg); <span class="hljs-comment">// Send to everyone including sender</span>
+        <span class="hljs-keyword">break</span>;
+      }
+
+      <span class="hljs-keyword">case</span> <span class="hljs-string">'typing'</span>: {
+        <span class="hljs-keyword">if</span> (client.username) {
+          broadcast({ <span class="hljs-attr">type</span>: <span class="hljs-string">'typing'</span>, <span class="hljs-attr">username</span>: client.username, <span class="hljs-attr">isTyping</span>: msg.isTyping }, ws);
+        }
+        <span class="hljs-keyword">break</span>;
+      }
+
+      <span class="hljs-attr">default</span>:
+        sendTo(ws, { <span class="hljs-attr">type</span>: <span class="hljs-string">'error'</span>, <span class="hljs-attr">message</span>: <span class="hljs-string">'Unknown message type'</span> });
+    }
+  });
+
+  ws.on(<span class="hljs-string">'close'</span>, () =&gt; {
+    <span class="hljs-keyword">const</span> client = clients.get(ws);
+    <span class="hljs-keyword">if</span> (client?.username) {
+      broadcast({ <span class="hljs-attr">type</span>: <span class="hljs-string">'user_left'</span>, <span class="hljs-attr">username</span>: client.username, <span class="hljs-attr">onlineCount</span>: wss.clients.size - <span class="hljs-number">1</span> });
+      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`<span class="hljs-subst">${client.username}</span> left the chat`</span>);
+    }
+    clients.delete(ws);
+  });
+
+  ws.on(<span class="hljs-string">'error'</span>, err =&gt; <span class="hljs-built_in">console</span>.error(<span class="hljs-string">`Client error [<span class="hljs-subst">${clientId}</span>]:`</span>, err.message));
+});
+
+server.listen(<span class="hljs-number">8080</span>, () =&gt; {
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Chat server running on ws://localhost:8080'</span>);
+});
+</div></code></pre>
+<h3 id="client--clientchathtml">Client — <code>client/chat.html</code></h3>
+<pre class="hljs"><code><div><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-meta-keyword">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">html</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">"en"</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">"UTF-8"</span> /&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>WebSocket Chat<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">style</span>&gt;</span><span class="css">
+    * { <span class="hljs-attribute">box-sizing</span>: border-box; <span class="hljs-attribute">margin</span>: <span class="hljs-number">0</span>; <span class="hljs-attribute">padding</span>: <span class="hljs-number">0</span>; }
+    <span class="hljs-selector-tag">body</span> { <span class="hljs-attribute">font-family</span>: sans-serif; <span class="hljs-attribute">background</span>: <span class="hljs-number">#f0f2f5</span>; <span class="hljs-attribute">height</span>: <span class="hljs-number">100vh</span>; <span class="hljs-attribute">display</span>: flex; <span class="hljs-attribute">flex-direction</span>: column; <span class="hljs-attribute">align-items</span>: center; <span class="hljs-attribute">justify-content</span>: center; }
+    <span class="hljs-selector-id">#app</span> { <span class="hljs-attribute">width</span>: <span class="hljs-number">480px</span>; <span class="hljs-attribute">background</span>: <span class="hljs-number">#fff</span>; <span class="hljs-attribute">border-radius</span>: <span class="hljs-number">12px</span>; <span class="hljs-attribute">box-shadow</span>: <span class="hljs-number">0</span> <span class="hljs-number">4px</span> <span class="hljs-number">20px</span> <span class="hljs-built_in">rgba</span>(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,.<span class="hljs-number">1</span>); <span class="hljs-attribute">overflow</span>: hidden; <span class="hljs-attribute">display</span>: flex; <span class="hljs-attribute">flex-direction</span>: column; <span class="hljs-attribute">height</span>: <span class="hljs-number">600px</span>; }
+    <span class="hljs-selector-id">#header</span> { <span class="hljs-attribute">background</span>: <span class="hljs-number">#4f46e5</span>; <span class="hljs-attribute">color</span>: white; <span class="hljs-attribute">padding</span>: <span class="hljs-number">16px</span>; <span class="hljs-attribute">font-size</span>: <span class="hljs-number">18px</span>; <span class="hljs-attribute">font-weight</span>: bold; }
+    <span class="hljs-selector-id">#status</span> { <span class="hljs-attribute">font-size</span>: <span class="hljs-number">12px</span>; <span class="hljs-attribute">opacity</span>: .<span class="hljs-number">8</span>; <span class="hljs-attribute">margin-top</span>: <span class="hljs-number">4px</span>; }
+    <span class="hljs-selector-id">#messages</span> { <span class="hljs-attribute">flex</span>: <span class="hljs-number">1</span>; <span class="hljs-attribute">overflow-y</span>: auto; <span class="hljs-attribute">padding</span>: <span class="hljs-number">16px</span>; <span class="hljs-attribute">display</span>: flex; <span class="hljs-attribute">flex-direction</span>: column; <span class="hljs-attribute">gap</span>: <span class="hljs-number">8px</span>; }
+    <span class="hljs-selector-class">.msg</span> { <span class="hljs-attribute">max-width</span>: <span class="hljs-number">80%</span>; <span class="hljs-attribute">padding</span>: <span class="hljs-number">8px</span> <span class="hljs-number">12px</span>; <span class="hljs-attribute">border-radius</span>: <span class="hljs-number">12px</span>; <span class="hljs-attribute">font-size</span>: <span class="hljs-number">14px</span>; }
+    <span class="hljs-selector-class">.msg</span><span class="hljs-selector-class">.me</span> { <span class="hljs-attribute">align-self</span>: flex-end; <span class="hljs-attribute">background</span>: <span class="hljs-number">#4f46e5</span>; <span class="hljs-attribute">color</span>: white; }
+    <span class="hljs-selector-class">.msg</span><span class="hljs-selector-class">.other</span> { <span class="hljs-attribute">align-self</span>: flex-start; <span class="hljs-attribute">background</span>: <span class="hljs-number">#e5e7eb</span>; <span class="hljs-attribute">color</span>: <span class="hljs-number">#111</span>; }
+    <span class="hljs-selector-class">.msg</span><span class="hljs-selector-class">.system</span> { <span class="hljs-attribute">align-self</span>: center; <span class="hljs-attribute">background</span>: none; <span class="hljs-attribute">color</span>: <span class="hljs-number">#888</span>; <span class="hljs-attribute">font-size</span>: <span class="hljs-number">12px</span>; <span class="hljs-attribute">font-style</span>: italic; }
+    <span class="hljs-selector-class">.msg-meta</span> { <span class="hljs-attribute">font-size</span>: <span class="hljs-number">11px</span>; <span class="hljs-attribute">opacity</span>: .<span class="hljs-number">6</span>; <span class="hljs-attribute">margin-bottom</span>: <span class="hljs-number">2px</span>; }
+    <span class="hljs-selector-id">#typing</span> { <span class="hljs-attribute">color</span>: <span class="hljs-number">#888</span>; <span class="hljs-attribute">font-size</span>: <span class="hljs-number">12px</span>; <span class="hljs-attribute">height</span>: <span class="hljs-number">20px</span>; <span class="hljs-attribute">padding</span>: <span class="hljs-number">0</span> <span class="hljs-number">16px</span>; }
+    <span class="hljs-selector-id">#footer</span> { <span class="hljs-attribute">display</span>: flex; <span class="hljs-attribute">padding</span>: <span class="hljs-number">12px</span>; <span class="hljs-attribute">border-top</span>: <span class="hljs-number">1px</span> solid <span class="hljs-number">#eee</span>; <span class="hljs-attribute">gap</span>: <span class="hljs-number">8px</span>; }
+    <span class="hljs-selector-id">#input</span> { <span class="hljs-attribute">flex</span>: <span class="hljs-number">1</span>; <span class="hljs-attribute">padding</span>: <span class="hljs-number">10px</span>; <span class="hljs-attribute">border</span>: <span class="hljs-number">1px</span> solid <span class="hljs-number">#ddd</span>; <span class="hljs-attribute">border-radius</span>: <span class="hljs-number">8px</span>; <span class="hljs-attribute">font-size</span>: <span class="hljs-number">14px</span>; }
+    <span class="hljs-selector-id">#sendBtn</span> { <span class="hljs-attribute">padding</span>: <span class="hljs-number">10px</span> <span class="hljs-number">20px</span>; <span class="hljs-attribute">background</span>: <span class="hljs-number">#4f46e5</span>; <span class="hljs-attribute">color</span>: white; <span class="hljs-attribute">border</span>: none; <span class="hljs-attribute">border-radius</span>: <span class="hljs-number">8px</span>; <span class="hljs-attribute">cursor</span>: pointer; <span class="hljs-attribute">font-size</span>: <span class="hljs-number">14px</span>; }
+    <span class="hljs-selector-id">#sendBtn</span><span class="hljs-selector-pseudo">:disabled</span> { <span class="hljs-attribute">opacity</span>: .<span class="hljs-number">5</span>; <span class="hljs-attribute">cursor</span>: not-allowed; }
+  </span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"app"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"header"</span>&gt;</span>
+      💬 WebSocket Chat
+      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"status"</span>&gt;</span>Connecting...<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"messages"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"typing"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"footer"</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"input"</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text"</span> <span class="hljs-attr">placeholder</span>=<span class="hljs-string">"Type a message..."</span> <span class="hljs-attr">disabled</span> <span class="hljs-attr">maxlength</span>=<span class="hljs-string">"1000"</span> /&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"sendBtn"</span> <span class="hljs-attr">disabled</span>&gt;</span>Send<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+
+  <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript">
+    <span class="hljs-keyword">const</span> messagesEl = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'messages'</span>);
+    <span class="hljs-keyword">const</span> inputEl = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'input'</span>);
+    <span class="hljs-keyword">const</span> sendBtn = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'sendBtn'</span>);
+    <span class="hljs-keyword">const</span> statusEl = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'status'</span>);
+    <span class="hljs-keyword">const</span> typingEl = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'typing'</span>);
+
+    <span class="hljs-keyword">let</span> username = <span class="hljs-literal">null</span>;
+    <span class="hljs-keyword">let</span> typingTimer = <span class="hljs-literal">null</span>;
+    <span class="hljs-keyword">let</span> isTyping = <span class="hljs-literal">false</span>;
+
+    <span class="hljs-keyword">const</span> ws = <span class="hljs-keyword">new</span> WebSocket(<span class="hljs-string">'ws://localhost:8080'</span>);
+
+    ws.onopen = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+      statusEl.textContent = <span class="hljs-string">'Connected'</span>;
+    };
+
+    ws.onclose = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+      statusEl.textContent = <span class="hljs-string">'Disconnected'</span>;
+      inputEl.disabled = <span class="hljs-literal">true</span>;
+      sendBtn.disabled = <span class="hljs-literal">true</span>;
+      addSystem(<span class="hljs-string">'Disconnected from server'</span>);
+    };
+
+    ws.onerror = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+      addSystem(<span class="hljs-string">'Connection error'</span>);
+    };
+
+    ws.onmessage = <span class="hljs-function">(<span class="hljs-params">event</span>) =&gt;</span> {
+      <span class="hljs-keyword">const</span> msg = <span class="hljs-built_in">JSON</span>.parse(event.data);
+
+      <span class="hljs-keyword">switch</span> (msg.type) {
+        <span class="hljs-keyword">case</span> <span class="hljs-string">'request_username'</span>: {
+          <span class="hljs-keyword">const</span> name = prompt(<span class="hljs-string">'Enter a username (min 2 characters):'</span>);
+          ws.send(<span class="hljs-built_in">JSON</span>.stringify({ <span class="hljs-attr">type</span>: <span class="hljs-string">'set_username'</span>, <span class="hljs-attr">username</span>: name }));
+          <span class="hljs-keyword">break</span>;
+        }
+        <span class="hljs-keyword">case</span> <span class="hljs-string">'joined'</span>: {
+          username = msg.message.split(<span class="hljs-string">','</span>)[<span class="hljs-number">0</span>].split(<span class="hljs-string">' '</span>)[<span class="hljs-number">1</span>];
+          statusEl.textContent = <span class="hljs-string">`<span class="hljs-subst">${msg.onlineCount}</span> online`</span>;
+          inputEl.disabled = <span class="hljs-literal">false</span>;
+          sendBtn.disabled = <span class="hljs-literal">false</span>;
+          addSystem(msg.message);
+          <span class="hljs-keyword">break</span>;
+        }
+        <span class="hljs-keyword">case</span> <span class="hljs-string">'chat'</span>: {
+          addMessage(msg);
+          <span class="hljs-keyword">break</span>;
+        }
+        <span class="hljs-keyword">case</span> <span class="hljs-string">'user_joined'</span>: {
+          statusEl.textContent = <span class="hljs-string">`<span class="hljs-subst">${msg.onlineCount}</span> online`</span>;
+          addSystem(<span class="hljs-string">`<span class="hljs-subst">${msg.username}</span> joined the chat`</span>);
+          <span class="hljs-keyword">break</span>;
+        }
+        <span class="hljs-keyword">case</span> <span class="hljs-string">'user_left'</span>: {
+          statusEl.textContent = <span class="hljs-string">`<span class="hljs-subst">${msg.onlineCount}</span> online`</span>;
+          addSystem(<span class="hljs-string">`<span class="hljs-subst">${msg.username}</span> left the chat`</span>);
+          <span class="hljs-keyword">break</span>;
+        }
+        <span class="hljs-keyword">case</span> <span class="hljs-string">'typing'</span>: {
+          <span class="hljs-keyword">if</span> (msg.isTyping) {
+            typingEl.textContent = <span class="hljs-string">`<span class="hljs-subst">${msg.username}</span> is typing...`</span>;
+          } <span class="hljs-keyword">else</span> {
+            typingEl.textContent = <span class="hljs-string">''</span>;
+          }
+          <span class="hljs-keyword">break</span>;
+        }
+        <span class="hljs-keyword">case</span> <span class="hljs-string">'error'</span>: {
+          addSystem(<span class="hljs-string">`Error: <span class="hljs-subst">${msg.message}</span>`</span>);
+          <span class="hljs-keyword">break</span>;
+        }
+      }
+    };
+
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">addMessage</span>(<span class="hljs-params">{ username: user, text, timestamp }</span>) </span>{
+      <span class="hljs-keyword">const</span> isMe = user === username;
+      <span class="hljs-keyword">const</span> div = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">'div'</span>);
+      div.className = <span class="hljs-string">`msg <span class="hljs-subst">${isMe ? <span class="hljs-string">'me'</span> : <span class="hljs-string">'other'</span>}</span>`</span>;
+      div.innerHTML = <span class="hljs-string">`
+        &lt;div class="msg-meta"&gt;<span class="hljs-subst">${isMe ? <span class="hljs-string">'You'</span> : user}</span> · <span class="hljs-subst">${<span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(timestamp).toLocaleTimeString()}</span>&lt;/div&gt;
+        &lt;div&gt;<span class="hljs-subst">${escapeHtml(text)}</span>&lt;/div&gt;
+      `</span>;
+      messagesEl.appendChild(div);
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">addSystem</span>(<span class="hljs-params">text</span>) </span>{
+      <span class="hljs-keyword">const</span> div = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">'div'</span>);
+      div.className = <span class="hljs-string">'msg system'</span>;
+      div.textContent = text;
+      messagesEl.appendChild(div);
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">escapeHtml</span>(<span class="hljs-params">text</span>) </span>{
+      <span class="hljs-keyword">return</span> text.replace(<span class="hljs-regexp">/&amp;/g</span>,<span class="hljs-string">'&amp;amp;'</span>).replace(<span class="hljs-regexp">/&lt;/g</span>,<span class="hljs-string">'&amp;lt;'</span>).replace(<span class="hljs-regexp">/&gt;/g</span>,<span class="hljs-string">'&amp;gt;'</span>);
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">sendMessage</span>(<span class="hljs-params"></span>) </span>{
+      <span class="hljs-keyword">const</span> text = inputEl.value.trim();
+      <span class="hljs-keyword">if</span> (!text || ws.readyState !== WebSocket.OPEN) <span class="hljs-keyword">return</span>;
+      ws.send(<span class="hljs-built_in">JSON</span>.stringify({ <span class="hljs-attr">type</span>: <span class="hljs-string">'chat'</span>, text }));
+      inputEl.value = <span class="hljs-string">''</span>;
+      sendTyping(<span class="hljs-literal">false</span>);
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">sendTyping</span>(<span class="hljs-params">typing</span>) </span>{
+      <span class="hljs-keyword">if</span> (isTyping !== typing) {
+        isTyping = typing;
+        ws.send(<span class="hljs-built_in">JSON</span>.stringify({ <span class="hljs-attr">type</span>: <span class="hljs-string">'typing'</span>, <span class="hljs-attr">isTyping</span>: typing }));
+      }
+    }
+
+    sendBtn.onclick = sendMessage;
+
+    inputEl.addEventListener(<span class="hljs-string">'keydown'</span>, (e) =&gt; {
+      <span class="hljs-keyword">if</span> (e.key === <span class="hljs-string">'Enter'</span>) <span class="hljs-keyword">return</span> sendMessage();
+      sendTyping(<span class="hljs-literal">true</span>);
+      clearTimeout(typingTimer);
+      typingTimer = setTimeout(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> sendTyping(<span class="hljs-literal">false</span>), <span class="hljs-number">2000</span>);
+    });
+  </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span>
+</div></code></pre>
+<hr>
+<h2 id="11-broadcasting--rooms">11. Broadcasting &amp; Rooms</h2>
+<h3 id="broadcasting-patterns">Broadcasting Patterns</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// 1. Broadcast to ALL connected clients</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">broadcastAll</span>(<span class="hljs-params">wss, data</span>) </span>{
+  <span class="hljs-keyword">const</span> msg = <span class="hljs-built_in">JSON</span>.stringify(data);
+  wss.clients.forEach(<span class="hljs-function"><span class="hljs-params">client</span> =&gt;</span> {
+    <span class="hljs-keyword">if</span> (client.readyState === WebSocket.OPEN) {
+      client.send(msg);
+    }
+  });
+}
+
+<span class="hljs-comment">// 2. Broadcast to all EXCEPT the sender</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">broadcastOthers</span>(<span class="hljs-params">wss, senderWs, data</span>) </span>{
+  <span class="hljs-keyword">const</span> msg = <span class="hljs-built_in">JSON</span>.stringify(data);
+  wss.clients.forEach(<span class="hljs-function"><span class="hljs-params">client</span> =&gt;</span> {
+    <span class="hljs-keyword">if</span> (client !== senderWs &amp;&amp; client.readyState === WebSocket.OPEN) {
+      client.send(msg);
+    }
+  });
+}
+
+<span class="hljs-comment">// 3. Send to a specific client by ID</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">sendToClient</span>(<span class="hljs-params">clients, targetId, data</span>) </span>{
+  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> [ws, meta] <span class="hljs-keyword">of</span> clients.entries()) {
+    <span class="hljs-keyword">if</span> (meta.id === targetId &amp;&amp; ws.readyState === WebSocket.OPEN) {
+      ws.send(<span class="hljs-built_in">JSON</span>.stringify(data));
+      <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+    }
+  }
+  <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+}
+</div></code></pre>
+<h3 id="room-implementation">Room Implementation</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// server/rooms.js</span>
+<span class="hljs-keyword">const</span> WebSocket = <span class="hljs-built_in">require</span>(<span class="hljs-string">'ws'</span>);
+
+<span class="hljs-keyword">const</span> wss = <span class="hljs-keyword">new</span> WebSocket.Server({ <span class="hljs-attr">port</span>: <span class="hljs-number">8080</span> });
+
+<span class="hljs-comment">// Room structure: Map&lt;roomName, Set&lt;WebSocket&gt;&gt;</span>
+<span class="hljs-keyword">const</span> rooms = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Map</span>();
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">joinRoom</span>(<span class="hljs-params">ws, roomName</span>) </span>{
+  <span class="hljs-keyword">if</span> (!rooms.has(roomName)) {
+    rooms.set(roomName, <span class="hljs-keyword">new</span> <span class="hljs-built_in">Set</span>());
+  }
+  rooms.get(roomName).add(ws);
+
+  <span class="hljs-comment">// Track which rooms the client is in</span>
+  <span class="hljs-keyword">if</span> (!ws.rooms) ws.rooms = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Set</span>();
+  ws.rooms.add(roomName);
+
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`Client joined room: <span class="hljs-subst">${roomName}</span> (<span class="hljs-subst">${rooms.get(roomName).size}</span> members)`</span>);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">leaveRoom</span>(<span class="hljs-params">ws, roomName</span>) </span>{
+  <span class="hljs-keyword">const</span> room = rooms.get(roomName);
+  <span class="hljs-keyword">if</span> (!room) <span class="hljs-keyword">return</span>;
+
+  room.delete(ws);
+  ws.rooms?.delete(roomName);
+
+  <span class="hljs-keyword">if</span> (room.size === <span class="hljs-number">0</span>) {
+    rooms.delete(roomName); <span class="hljs-comment">// Clean up empty rooms</span>
+  }
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">leaveAllRooms</span>(<span class="hljs-params">ws</span>) </span>{
+  <span class="hljs-keyword">if</span> (!ws.rooms) <span class="hljs-keyword">return</span>;
+  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> room <span class="hljs-keyword">of</span> ws.rooms) {
+    leaveRoom(ws, room);
+  }
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">broadcastToRoom</span>(<span class="hljs-params">roomName, data, excludeWs = null</span>) </span>{
+  <span class="hljs-keyword">const</span> room = rooms.get(roomName);
+  <span class="hljs-keyword">if</span> (!room) <span class="hljs-keyword">return</span>;
+
+  <span class="hljs-keyword">const</span> msg = <span class="hljs-built_in">JSON</span>.stringify(data);
+  room.forEach(<span class="hljs-function"><span class="hljs-params">client</span> =&gt;</span> {
+    <span class="hljs-keyword">if</span> (client !== excludeWs &amp;&amp; client.readyState === WebSocket.OPEN) {
+      client.send(msg);
+    }
+  });
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getRoomList</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">const</span> list = {};
+  rooms.forEach(<span class="hljs-function">(<span class="hljs-params">members, name</span>) =&gt;</span> {
+    list[name] = members.size;
+  });
+  <span class="hljs-keyword">return</span> list;
+}
+
+wss.on(<span class="hljs-string">'connection'</span>, (ws) =&gt; {
+  ws.rooms = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Set</span>();
+
+  ws.on(<span class="hljs-string">'message'</span>, (raw) =&gt; {
+    <span class="hljs-keyword">let</span> msg;
+    <span class="hljs-keyword">try</span> { msg = <span class="hljs-built_in">JSON</span>.parse(raw.toString()); } <span class="hljs-keyword">catch</span> { <span class="hljs-keyword">return</span>; }
+
+    <span class="hljs-keyword">switch</span> (msg.type) {
+      <span class="hljs-keyword">case</span> <span class="hljs-string">'join_room'</span>:
+        joinRoom(ws, msg.room);
+        ws.send(<span class="hljs-built_in">JSON</span>.stringify({
+          <span class="hljs-attr">type</span>: <span class="hljs-string">'room_joined'</span>,
+          <span class="hljs-attr">room</span>: msg.room,
+          <span class="hljs-attr">members</span>: rooms.get(msg.room)?.size
+        }));
+        broadcastToRoom(msg.room, {
+          <span class="hljs-attr">type</span>: <span class="hljs-string">'user_joined_room'</span>,
+          <span class="hljs-attr">room</span>: msg.room,
+          <span class="hljs-attr">members</span>: rooms.get(msg.room)?.size
+        }, ws);
+        <span class="hljs-keyword">break</span>;
+
+      <span class="hljs-keyword">case</span> <span class="hljs-string">'leave_room'</span>:
+        leaveRoom(ws, msg.room);
+        broadcastToRoom(msg.room, {
+          <span class="hljs-attr">type</span>: <span class="hljs-string">'user_left_room'</span>,
+          <span class="hljs-attr">room</span>: msg.room,
+        });
+        <span class="hljs-keyword">break</span>;
+
+      <span class="hljs-keyword">case</span> <span class="hljs-string">'room_message'</span>:
+        <span class="hljs-keyword">if</span> (!ws.rooms.has(msg.room)) {
+          ws.send(<span class="hljs-built_in">JSON</span>.stringify({ <span class="hljs-attr">type</span>: <span class="hljs-string">'error'</span>, <span class="hljs-attr">message</span>: <span class="hljs-string">'You are not in that room'</span> }));
+          <span class="hljs-keyword">return</span>;
+        }
+        broadcastToRoom(msg.room, {
+          <span class="hljs-attr">type</span>: <span class="hljs-string">'room_message'</span>,
+          <span class="hljs-attr">room</span>: msg.room,
+          <span class="hljs-attr">text</span>: msg.text,
+          <span class="hljs-attr">from</span>: ws.username || <span class="hljs-string">'Anonymous'</span>,
+          <span class="hljs-attr">timestamp</span>: <span class="hljs-built_in">Date</span>.now(),
+        });
+        <span class="hljs-keyword">break</span>;
+
+      <span class="hljs-keyword">case</span> <span class="hljs-string">'list_rooms'</span>:
+        ws.send(<span class="hljs-built_in">JSON</span>.stringify({ <span class="hljs-attr">type</span>: <span class="hljs-string">'room_list'</span>, <span class="hljs-attr">rooms</span>: getRoomList() }));
+        <span class="hljs-keyword">break</span>;
+    }
+  });
+
+  ws.on(<span class="hljs-string">'close'</span>, () =&gt; {
+    leaveAllRooms(ws);
+  });
+});
+
+<span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Room server on ws://localhost:8080'</span>);
+</div></code></pre>
+<hr>
+<h2 id="12-heartbeats-pingpong--keep-alive">12. Heartbeats, Ping/Pong &amp; Keep-Alive</h2>
+<p>Without periodic checks, dead connections can accumulate (e.g., client crashed without sending a close frame). Implement heartbeats.</p>
+<h3 id="server-side-heartbeat">Server-Side Heartbeat</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> WebSocket = <span class="hljs-built_in">require</span>(<span class="hljs-string">'ws'</span>);
+
+<span class="hljs-keyword">const</span> wss = <span class="hljs-keyword">new</span> WebSocket.Server({ <span class="hljs-attr">port</span>: <span class="hljs-number">8080</span> });
+
+<span class="hljs-keyword">const</span> HEARTBEAT_INTERVAL = <span class="hljs-number">30000</span>; <span class="hljs-comment">// 30 seconds</span>
+<span class="hljs-keyword">const</span> HEARTBEAT_TIMEOUT  = <span class="hljs-number">35000</span>; <span class="hljs-comment">// Consider dead after 35s</span>
+
+wss.on(<span class="hljs-string">'connection'</span>, (ws) =&gt; {
+  ws.isAlive = <span class="hljs-literal">true</span>;
+  ws.lastPong = <span class="hljs-built_in">Date</span>.now();
+
+  <span class="hljs-comment">// Reset alive flag when pong is received</span>
+  ws.on(<span class="hljs-string">'pong'</span>, () =&gt; {
+    ws.isAlive = <span class="hljs-literal">true</span>;
+    ws.lastPong = <span class="hljs-built_in">Date</span>.now();
+  });
+
+  <span class="hljs-comment">// You can also implement application-level ping</span>
+  ws.on(<span class="hljs-string">'message'</span>, (raw) =&gt; {
+    <span class="hljs-keyword">const</span> msg = <span class="hljs-built_in">JSON</span>.parse(raw.toString());
+    <span class="hljs-keyword">if</span> (msg.type === <span class="hljs-string">'ping'</span>) {
+      ws.send(<span class="hljs-built_in">JSON</span>.stringify({ <span class="hljs-attr">type</span>: <span class="hljs-string">'pong'</span>, <span class="hljs-attr">timestamp</span>: <span class="hljs-built_in">Date</span>.now() }));
+    }
+  });
+});
+
+<span class="hljs-comment">// Heartbeat interval — ping all clients</span>
+<span class="hljs-keyword">const</span> heartbeatInterval = setInterval(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+  wss.clients.forEach(<span class="hljs-function"><span class="hljs-params">ws</span> =&gt;</span> {
+    <span class="hljs-keyword">if</span> (!ws.isAlive) {
+      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Terminating dead connection'</span>);
+      ws.terminate(); <span class="hljs-comment">// Force-close without close frame</span>
+      <span class="hljs-keyword">return</span>;
+    }
+
+    ws.isAlive = <span class="hljs-literal">false</span>; <span class="hljs-comment">// Will be reset on pong</span>
+    ws.ping(); <span class="hljs-comment">// Send WebSocket-level ping</span>
+  });
+}, HEARTBEAT_INTERVAL);
+
+wss.on(<span class="hljs-string">'close'</span>, () =&gt; {
+  clearInterval(heartbeatInterval);
+});
+
+<span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Heartbeat server on ws://localhost:8080'</span>);
+</div></code></pre>
+<h3 id="per-connection-timeout-alternative-approach">Per-Connection Timeout (alternative approach)</h3>
+<pre class="hljs"><code><div>wss.on(<span class="hljs-string">'connection'</span>, (ws) =&gt; {
+  <span class="hljs-keyword">let</span> timeout;
+
+  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">resetTimeout</span>(<span class="hljs-params"></span>) </span>{
+    clearTimeout(timeout);
+    timeout = setTimeout(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Connection timed out'</span>);
+      ws.terminate();
+    }, <span class="hljs-number">60000</span>); <span class="hljs-comment">// 60 second idle timeout</span>
+  }
+
+  resetTimeout();
+
+  ws.on(<span class="hljs-string">'message'</span>, () =&gt; resetTimeout()); <span class="hljs-comment">// Reset on any activity</span>
+  ws.on(<span class="hljs-string">'pong'</span>, () =&gt; resetTimeout());
+  ws.on(<span class="hljs-string">'close'</span>, () =&gt; clearTimeout(timeout));
+});
+</div></code></pre>
+<hr>
+<h2 id="13-reconnection-logic-on-the-client">13. Reconnection Logic on the Client</h2>
+<p>WebSockets do not automatically reconnect. Implement this in the browser client.</p>
+<pre class="hljs"><code><div><span class="hljs-comment">// client/reconnect.js</span>
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ReconnectingWebSocket</span> </span>{
+  <span class="hljs-keyword">constructor</span>(url, options = {}) {
+    <span class="hljs-keyword">this</span>.url = url;
+    <span class="hljs-keyword">this</span>.options = {
+      <span class="hljs-attr">maxReconnectDelay</span>: <span class="hljs-number">30000</span>,   <span class="hljs-comment">// 30s max delay</span>
+      <span class="hljs-attr">minReconnectDelay</span>: <span class="hljs-number">1000</span>,    <span class="hljs-comment">// 1s initial delay</span>
+      <span class="hljs-attr">reconnectDecay</span>: <span class="hljs-number">1.5</span>,        <span class="hljs-comment">// Exponential backoff factor</span>
+      <span class="hljs-attr">maxRetries</span>: <span class="hljs-literal">Infinity</span>,       <span class="hljs-comment">// Retry forever</span>
+      <span class="hljs-attr">debug</span>: <span class="hljs-literal">false</span>,
+      ...options,
+    };
+
+    <span class="hljs-keyword">this</span>.retryCount = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">this</span>.ws = <span class="hljs-literal">null</span>;
+    <span class="hljs-keyword">this</span>.shouldReconnect = <span class="hljs-literal">true</span>;
+    <span class="hljs-keyword">this</span>.listeners = { <span class="hljs-attr">open</span>: [], <span class="hljs-attr">message</span>: [], <span class="hljs-attr">close</span>: [], <span class="hljs-attr">error</span>: [] };
+
+    <span class="hljs-keyword">this</span>.connect();
+  }
+
+  connect() {
+    <span class="hljs-keyword">this</span>.ws = <span class="hljs-keyword">new</span> WebSocket(<span class="hljs-keyword">this</span>.url);
+
+    <span class="hljs-keyword">this</span>.ws.onopen = <span class="hljs-function">(<span class="hljs-params">e</span>) =&gt;</span> {
+      <span class="hljs-keyword">this</span>.retryCount = <span class="hljs-number">0</span>;
+      <span class="hljs-keyword">this</span>.log(<span class="hljs-string">'Connected'</span>);
+      <span class="hljs-keyword">this</span>.listeners.open.forEach(<span class="hljs-function"><span class="hljs-params">fn</span> =&gt;</span> fn(e));
+    };
+
+    <span class="hljs-keyword">this</span>.ws.onmessage = <span class="hljs-function">(<span class="hljs-params">e</span>) =&gt;</span> {
+      <span class="hljs-keyword">this</span>.listeners.message.forEach(<span class="hljs-function"><span class="hljs-params">fn</span> =&gt;</span> fn(e));
+    };
+
+    <span class="hljs-keyword">this</span>.ws.onerror = <span class="hljs-function">(<span class="hljs-params">e</span>) =&gt;</span> {
+      <span class="hljs-keyword">this</span>.log(<span class="hljs-string">'Error'</span>);
+      <span class="hljs-keyword">this</span>.listeners.error.forEach(<span class="hljs-function"><span class="hljs-params">fn</span> =&gt;</span> fn(e));
+    };
+
+    <span class="hljs-keyword">this</span>.ws.onclose = <span class="hljs-function">(<span class="hljs-params">e</span>) =&gt;</span> {
+      <span class="hljs-keyword">this</span>.log(<span class="hljs-string">`Closed: <span class="hljs-subst">${e.code}</span>`</span>);
+      <span class="hljs-keyword">this</span>.listeners.close.forEach(<span class="hljs-function"><span class="hljs-params">fn</span> =&gt;</span> fn(e));
+
+      <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.shouldReconnect &amp;&amp; <span class="hljs-keyword">this</span>.retryCount &lt; <span class="hljs-keyword">this</span>.options.maxRetries) {
+        <span class="hljs-keyword">const</span> delay = <span class="hljs-built_in">Math</span>.min(
+          <span class="hljs-keyword">this</span>.options.minReconnectDelay * <span class="hljs-built_in">Math</span>.pow(<span class="hljs-keyword">this</span>.options.reconnectDecay, <span class="hljs-keyword">this</span>.retryCount),
+          <span class="hljs-keyword">this</span>.options.maxReconnectDelay
+        );
+        <span class="hljs-keyword">this</span>.retryCount++;
+        <span class="hljs-keyword">this</span>.log(<span class="hljs-string">`Reconnecting in <span class="hljs-subst">${<span class="hljs-built_in">Math</span>.round(delay)}</span>ms (attempt <span class="hljs-subst">${<span class="hljs-keyword">this</span>.retryCount}</span>)`</span>);
+        setTimeout(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> <span class="hljs-keyword">this</span>.connect(), delay);
+      }
+    };
+  }
+
+  send(data) {
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.ws?.readyState === WebSocket.OPEN) {
+      <span class="hljs-keyword">this</span>.ws.send(<span class="hljs-keyword">typeof</span> data === <span class="hljs-string">'object'</span> ? <span class="hljs-built_in">JSON</span>.stringify(data) : data);
+    } <span class="hljs-keyword">else</span> {
+      <span class="hljs-keyword">this</span>.log(<span class="hljs-string">'Cannot send — not connected'</span>);
+    }
+  }
+
+  close(code = <span class="hljs-number">1000</span>, reason = <span class="hljs-string">''</span>) {
+    <span class="hljs-keyword">this</span>.shouldReconnect = <span class="hljs-literal">false</span>;
+    <span class="hljs-keyword">this</span>.ws?.close(code, reason);
+  }
+
+  on(event, callback) {
+    <span class="hljs-keyword">this</span>.listeners[event]?.push(callback);
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>; <span class="hljs-comment">// Chainable</span>
+  }
+
+  log(msg) {
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.options.debug) <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`[RWS] <span class="hljs-subst">${msg}</span>`</span>);
+  }
+}
+
+<span class="hljs-comment">// Usage</span>
+<span class="hljs-keyword">const</span> ws = <span class="hljs-keyword">new</span> ReconnectingWebSocket(<span class="hljs-string">'ws://localhost:8080'</span>, { <span class="hljs-attr">debug</span>: <span class="hljs-literal">true</span> });
+
+ws.on(<span class="hljs-string">'open'</span>, () =&gt; <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Connected!'</span>))
+  .on(<span class="hljs-string">'message'</span>, (e) =&gt; <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Received:'</span>, e.data))
+  .on(<span class="hljs-string">'close'</span>, (e) =&gt; <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Closed:'</span>, e.code));
+
+ws.send({ <span class="hljs-attr">type</span>: <span class="hljs-string">'hello'</span> });
+</div></code></pre>
+<hr>
+<h2 id="14-authentication--authorization">14. Authentication &amp; Authorization</h2>
+<h3 id="method-1-token-in-the-url-query-string">Method 1: Token in the URL Query String</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// Client (browser)</span>
+<span class="hljs-keyword">const</span> token = localStorage.getItem(<span class="hljs-string">'authToken'</span>);
+<span class="hljs-keyword">const</span> ws = <span class="hljs-keyword">new</span> WebSocket(<span class="hljs-string">`wss://example.com/ws?token=<span class="hljs-subst">${token}</span>`</span>);
+</div></code></pre>
+<pre class="hljs"><code><div><span class="hljs-comment">// Server (ws library)</span>
+<span class="hljs-keyword">const</span> url = <span class="hljs-built_in">require</span>(<span class="hljs-string">'url'</span>);
+<span class="hljs-keyword">const</span> jwt = <span class="hljs-built_in">require</span>(<span class="hljs-string">'jsonwebtoken'</span>);
+
+<span class="hljs-keyword">const</span> JWT_SECRET = process.env.JWT_SECRET || <span class="hljs-string">'your-secret-key'</span>;
+
+wss.on(<span class="hljs-string">'connection'</span>, (ws, req) =&gt; {
+  <span class="hljs-keyword">const</span> params = <span class="hljs-keyword">new</span> url.URL(req.url, <span class="hljs-string">'http://localhost'</span>).searchParams;
+  <span class="hljs-keyword">const</span> token = params.get(<span class="hljs-string">'token'</span>);
+
+  <span class="hljs-keyword">try</span> {
+    <span class="hljs-keyword">const</span> user = jwt.verify(token, JWT_SECRET);
+    ws.user = user;
+    ws.send(<span class="hljs-built_in">JSON</span>.stringify({ <span class="hljs-attr">type</span>: <span class="hljs-string">'auth_success'</span>, <span class="hljs-attr">username</span>: user.name }));
+  } <span class="hljs-keyword">catch</span> (err) {
+    ws.send(<span class="hljs-built_in">JSON</span>.stringify({ <span class="hljs-attr">type</span>: <span class="hljs-string">'auth_error'</span>, <span class="hljs-attr">message</span>: <span class="hljs-string">'Invalid token'</span> }));
+    ws.close(<span class="hljs-number">1008</span>, <span class="hljs-string">'Unauthorized'</span>); <span class="hljs-comment">// Policy violation close code</span>
+  }
+});
+</div></code></pre>
+<blockquote>
+<p>⚠️ <strong>Note:</strong> Query string tokens appear in server logs. Prefer cookies or the first-message method below.</p>
+</blockquote>
+<h3 id="method-2-cookie-based-auth-recommended-for-browsers">Method 2: Cookie-Based Auth (Recommended for Browsers)</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// Client: Just connect — cookies are sent automatically</span>
+<span class="hljs-keyword">const</span> ws = <span class="hljs-keyword">new</span> WebSocket(<span class="hljs-string">'wss://example.com/ws'</span>);
+</div></code></pre>
+<pre class="hljs"><code><div><span class="hljs-comment">// Server: Read cookies from the handshake request</span>
+<span class="hljs-keyword">const</span> cookie = <span class="hljs-built_in">require</span>(<span class="hljs-string">'cookie'</span>);
+<span class="hljs-keyword">const</span> jwt = <span class="hljs-built_in">require</span>(<span class="hljs-string">'jsonwebtoken'</span>);
+
+wss.on(<span class="hljs-string">'connection'</span>, (ws, req) =&gt; {
+  <span class="hljs-keyword">const</span> cookies = cookie.parse(req.headers.cookie || <span class="hljs-string">''</span>);
+  <span class="hljs-keyword">const</span> token = cookies.session;
+
+  <span class="hljs-keyword">if</span> (!token) {
+    ws.close(<span class="hljs-number">1008</span>, <span class="hljs-string">'No session cookie'</span>);
+    <span class="hljs-keyword">return</span>;
+  }
+
+  <span class="hljs-keyword">try</span> {
+    ws.user = jwt.verify(token, process.env.JWT_SECRET);
+  } <span class="hljs-keyword">catch</span> {
+    ws.close(<span class="hljs-number">1008</span>, <span class="hljs-string">'Invalid session'</span>);
+  }
+});
+</div></code></pre>
+<h3 id="method-3-first-message-authentication">Method 3: First-Message Authentication</h3>
+<p>The client sends credentials as the first message after connecting:</p>
+<pre class="hljs"><code><div><span class="hljs-comment">// Client</span>
+ws.onopen = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+  ws.send(<span class="hljs-built_in">JSON</span>.stringify({
+    <span class="hljs-attr">type</span>: <span class="hljs-string">'auth'</span>,
+    <span class="hljs-attr">token</span>: localStorage.getItem(<span class="hljs-string">'authToken'</span>),
+  }));
+};
+</div></code></pre>
+<pre class="hljs"><code><div><span class="hljs-comment">// Server</span>
+wss.on(<span class="hljs-string">'connection'</span>, (ws) =&gt; {
+  ws.authenticated = <span class="hljs-literal">false</span>;
+
+  <span class="hljs-keyword">const</span> authTimeout = setTimeout(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+    <span class="hljs-keyword">if</span> (!ws.authenticated) {
+      ws.close(<span class="hljs-number">1008</span>, <span class="hljs-string">'Authentication timeout'</span>);
+    }
+  }, <span class="hljs-number">5000</span>); <span class="hljs-comment">// Must authenticate within 5 seconds</span>
+
+  ws.on(<span class="hljs-string">'message'</span>, (raw) =&gt; {
+    <span class="hljs-keyword">const</span> msg = <span class="hljs-built_in">JSON</span>.parse(raw.toString());
+
+    <span class="hljs-keyword">if</span> (!ws.authenticated) {
+      <span class="hljs-keyword">if</span> (msg.type === <span class="hljs-string">'auth'</span>) {
+        <span class="hljs-keyword">try</span> {
+          ws.user = jwt.verify(msg.token, JWT_SECRET);
+          ws.authenticated = <span class="hljs-literal">true</span>;
+          clearTimeout(authTimeout);
+          ws.send(<span class="hljs-built_in">JSON</span>.stringify({ <span class="hljs-attr">type</span>: <span class="hljs-string">'auth_success'</span> }));
+        } <span class="hljs-keyword">catch</span> {
+          ws.close(<span class="hljs-number">1008</span>, <span class="hljs-string">'Invalid token'</span>);
+        }
+      } <span class="hljs-keyword">else</span> {
+        ws.send(<span class="hljs-built_in">JSON</span>.stringify({ <span class="hljs-attr">type</span>: <span class="hljs-string">'error'</span>, <span class="hljs-attr">message</span>: <span class="hljs-string">'Authenticate first'</span> }));
+      }
+      <span class="hljs-keyword">return</span>;
+    }
+
+    <span class="hljs-comment">// Handle authenticated messages</span>
+    handleMessage(ws, msg);
+  });
+});
+</div></code></pre>
+<h3 id="middleware-style-auth-with-express">Middleware-Style Auth with Express</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> express = <span class="hljs-built_in">require</span>(<span class="hljs-string">'express'</span>);
+<span class="hljs-keyword">const</span> http = <span class="hljs-built_in">require</span>(<span class="hljs-string">'http'</span>);
+<span class="hljs-keyword">const</span> WebSocket = <span class="hljs-built_in">require</span>(<span class="hljs-string">'ws'</span>);
+<span class="hljs-keyword">const</span> jwt = <span class="hljs-built_in">require</span>(<span class="hljs-string">'jsonwebtoken'</span>);
+
+<span class="hljs-keyword">const</span> app = express();
+<span class="hljs-keyword">const</span> server = http.createServer(app);
+<span class="hljs-keyword">const</span> wss = <span class="hljs-keyword">new</span> WebSocket.Server({ <span class="hljs-attr">noServer</span>: <span class="hljs-literal">true</span> }); <span class="hljs-comment">// noServer: handle upgrade manually</span>
+
+server.on(<span class="hljs-string">'upgrade'</span>, (req, socket, head) =&gt; {
+  <span class="hljs-comment">// Parse token from cookie or query</span>
+  <span class="hljs-keyword">const</span> params = <span class="hljs-keyword">new</span> URL(req.url, <span class="hljs-string">'http://localhost'</span>).searchParams;
+  <span class="hljs-keyword">const</span> token = params.get(<span class="hljs-string">'token'</span>);
+
+  jwt.verify(token, process.env.JWT_SECRET, (err, user) =&gt; {
+    <span class="hljs-keyword">if</span> (err) {
+      socket.write(<span class="hljs-string">'HTTP/1.1 401 Unauthorized\r\n\r\n'</span>);
+      socket.destroy();
+      <span class="hljs-keyword">return</span>;
+    }
+
+    req.user = user;
+    wss.handleUpgrade(req, socket, head, (ws) =&gt; {
+      wss.emit(<span class="hljs-string">'connection'</span>, ws, req);
+    });
+  });
+});
+
+wss.on(<span class="hljs-string">'connection'</span>, (ws, req) =&gt; {
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`Authenticated user: <span class="hljs-subst">${req.user.name}</span>`</span>);
+  ws.user = req.user;
+});
+
+server.listen(<span class="hljs-number">3000</span>);
+</div></code></pre>
+<hr>
+<h2 id="15-websocket-with-expressjs">15. WebSocket with Express.js</h2>
+<h3 id="integrating-ws-with-express-on-one-port">Integrating <code>ws</code> with Express on One Port</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// server/express-ws.js</span>
+<span class="hljs-keyword">const</span> express = <span class="hljs-built_in">require</span>(<span class="hljs-string">'express'</span>);
+<span class="hljs-keyword">const</span> http = <span class="hljs-built_in">require</span>(<span class="hljs-string">'http'</span>);
+<span class="hljs-keyword">const</span> WebSocket = <span class="hljs-built_in">require</span>(<span class="hljs-string">'ws'</span>);
+<span class="hljs-keyword">const</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">'path'</span>);
+
+<span class="hljs-keyword">const</span> app = express();
+<span class="hljs-keyword">const</span> server = http.createServer(app);
+<span class="hljs-keyword">const</span> wss = <span class="hljs-keyword">new</span> WebSocket.Server({ server, <span class="hljs-attr">path</span>: <span class="hljs-string">'/ws'</span> });
+
+<span class="hljs-comment">// Express routes</span>
+app.use(express.static(path.join(__dirname, <span class="hljs-string">'../client'</span>)));
+app.use(express.json());
+
+app.get(<span class="hljs-string">'/api/status'</span>, (req, res) =&gt; {
+  res.json({
+    <span class="hljs-attr">connectedClients</span>: wss.clients.size,
+    <span class="hljs-attr">uptime</span>: process.uptime(),
+  });
+});
+
+app.post(<span class="hljs-string">'/api/broadcast'</span>, (req, res) =&gt; {
+  <span class="hljs-keyword">const</span> { message } = req.body;
+  <span class="hljs-keyword">let</span> sent = <span class="hljs-number">0</span>;
+
+  wss.clients.forEach(<span class="hljs-function"><span class="hljs-params">client</span> =&gt;</span> {
+    <span class="hljs-keyword">if</span> (client.readyState === WebSocket.OPEN) {
+      client.send(<span class="hljs-built_in">JSON</span>.stringify({ <span class="hljs-attr">type</span>: <span class="hljs-string">'broadcast'</span>, message }));
+      sent++;
+    }
+  });
+
+  res.json({ sent });
+});
+
+<span class="hljs-comment">// WebSocket handling</span>
+wss.on(<span class="hljs-string">'connection'</span>, (ws, req) =&gt; {
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'New WS connection from'</span>, req.socket.remoteAddress);
+
+  ws.on(<span class="hljs-string">'message'</span>, (data) =&gt; {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Received:'</span>, data.toString());
+    ws.send(<span class="hljs-built_in">JSON</span>.stringify({ <span class="hljs-attr">type</span>: <span class="hljs-string">'ack'</span>, <span class="hljs-attr">received</span>: <span class="hljs-literal">true</span> }));
+  });
+});
+
+server.listen(<span class="hljs-number">3000</span>, () =&gt; {
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Server: http://localhost:3000'</span>);
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'WebSocket: ws://localhost:3000/ws'</span>);
+});
+</div></code></pre>
+<h3 id="using-express-ws-package">Using <code>express-ws</code> Package</h3>
+<pre class="hljs"><code><div>npm install express-ws
+</div></code></pre>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> express = <span class="hljs-built_in">require</span>(<span class="hljs-string">'express'</span>);
+<span class="hljs-keyword">const</span> expressWs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'express-ws'</span>);
+
+<span class="hljs-keyword">const</span> app = express();
+expressWs(app); <span class="hljs-comment">// Patches app with .ws() method</span>
+
+<span class="hljs-comment">// WebSocket route</span>
+app.ws(<span class="hljs-string">'/chat'</span>, (ws, req) =&gt; {
+  ws.on(<span class="hljs-string">'message'</span>, (msg) =&gt; {
+    ws.send(<span class="hljs-string">`Echo: <span class="hljs-subst">${msg}</span>`</span>);
+  });
+});
+
+<span class="hljs-comment">// Regular HTTP routes work alongside WebSocket routes</span>
+app.get(<span class="hljs-string">'/'</span>, (req, res) =&gt; res.send(<span class="hljs-string">'Hello HTTP!'</span>));
+
+app.listen(<span class="hljs-number">3000</span>, () =&gt; <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Listening on :3000'</span>));
+</div></code></pre>
+<hr>
+<h2 id="16-using-socketio">16. Using Socket.IO</h2>
+<p><strong>Socket.IO</strong> builds on WebSockets and adds: automatic reconnection, rooms, namespaces, event-based API, and fallback to long-polling.</p>
+<h3 id="installation">Installation</h3>
+<pre class="hljs"><code><div>npm install socket.io        <span class="hljs-comment"># Server</span>
+npm install socket.io-client <span class="hljs-comment"># Node.js client</span>
+</div></code></pre>
+<h3 id="socketio-server">Socket.IO Server</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// server/socketio.js</span>
+<span class="hljs-keyword">const</span> http = <span class="hljs-built_in">require</span>(<span class="hljs-string">'http'</span>);
+<span class="hljs-keyword">const</span> { Server } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'socket.io'</span>);
+
+<span class="hljs-keyword">const</span> server = http.createServer();
+<span class="hljs-keyword">const</span> io = <span class="hljs-keyword">new</span> Server(server, {
+  <span class="hljs-attr">cors</span>: {
+    <span class="hljs-attr">origin</span>: <span class="hljs-string">'*'</span>,     <span class="hljs-comment">// In production, restrict this</span>
+    <span class="hljs-attr">methods</span>: [<span class="hljs-string">'GET'</span>, <span class="hljs-string">'POST'</span>],
+  },
+  <span class="hljs-attr">transports</span>: [<span class="hljs-string">'websocket'</span>, <span class="hljs-string">'polling'</span>], <span class="hljs-comment">// Try WS first, fallback to polling</span>
+});
+
+<span class="hljs-comment">// Middleware</span>
+io.use(<span class="hljs-function">(<span class="hljs-params">socket, next</span>) =&gt;</span> {
+  <span class="hljs-keyword">const</span> token = socket.handshake.auth.token;
+  <span class="hljs-keyword">if</span> (!token) <span class="hljs-keyword">return</span> next(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'Authentication required'</span>));
+
+  <span class="hljs-keyword">try</span> {
+    socket.user = jwt.verify(token, process.env.JWT_SECRET);
+    next();
+  } <span class="hljs-keyword">catch</span> {
+    next(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'Invalid token'</span>));
+  }
+});
+
+io.on(<span class="hljs-string">'connection'</span>, (socket) =&gt; {
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`Connected: <span class="hljs-subst">${socket.id}</span>`</span>);
+
+  <span class="hljs-comment">// Emit to this client only</span>
+  socket.emit(<span class="hljs-string">'welcome'</span>, { <span class="hljs-attr">message</span>: <span class="hljs-string">'Hello!'</span> });
+
+  <span class="hljs-comment">// Custom events</span>
+  socket.on(<span class="hljs-string">'join_room'</span>, (room) =&gt; {
+    socket.join(room);
+    socket.to(room).emit(<span class="hljs-string">'user_joined'</span>, { <span class="hljs-attr">id</span>: socket.id });
+    io.to(room).emit(<span class="hljs-string">'room_count'</span>, io.sockets.adapter.rooms.get(room)?.size);
+  });
+
+  socket.on(<span class="hljs-string">'chat'</span>, ({ room, text }) =&gt; {
+    io.to(room).emit(<span class="hljs-string">'chat'</span>, {
+      text,
+      <span class="hljs-attr">from</span>: socket.id,
+      <span class="hljs-attr">timestamp</span>: <span class="hljs-built_in">Date</span>.now(),
+    });
+  });
+
+  socket.on(<span class="hljs-string">'disconnect'</span>, (reason) =&gt; {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`Disconnected: <span class="hljs-subst">${socket.id}</span> (<span class="hljs-subst">${reason}</span>)`</span>);
+  });
+});
+
+<span class="hljs-comment">// Namespaces — separate "virtual" servers</span>
+<span class="hljs-keyword">const</span> adminNS = io.of(<span class="hljs-string">'/admin'</span>);
+adminNS.on(<span class="hljs-string">'connection'</span>, (socket) =&gt; {
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Admin connected:'</span>, socket.id);
+});
+
+server.listen(<span class="hljs-number">3000</span>, () =&gt; <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Socket.IO server on :3000'</span>));
+</div></code></pre>
+<h3 id="socketio-browser-client">Socket.IO Browser Client</h3>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"https://cdn.socket.io/4.7.2/socket.io.min.js"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript">
+  <span class="hljs-keyword">const</span> socket = io(<span class="hljs-string">'http://localhost:3000'</span>, {
+    <span class="hljs-attr">auth</span>: { <span class="hljs-attr">token</span>: localStorage.getItem(<span class="hljs-string">'token'</span>) },
+    <span class="hljs-attr">transports</span>: [<span class="hljs-string">'websocket'</span>],
+  });
+
+  socket.on(<span class="hljs-string">'connect'</span>, () =&gt; {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Connected:'</span>, socket.id);
+    socket.emit(<span class="hljs-string">'join_room'</span>, <span class="hljs-string">'general'</span>);
+  });
+
+  socket.on(<span class="hljs-string">'welcome'</span>, (data) =&gt; <span class="hljs-built_in">console</span>.log(data.message));
+
+  socket.on(<span class="hljs-string">'chat'</span>, ({ text, <span class="hljs-keyword">from</span>, timestamp }) =&gt; {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`<span class="hljs-subst">${<span class="hljs-keyword">from</span>}</span>: <span class="hljs-subst">${text}</span>`</span>);
+  });
+
+  socket.on(<span class="hljs-string">'connect_error'</span>, (err) =&gt; {
+    <span class="hljs-built_in">console</span>.error(<span class="hljs-string">'Connection failed:'</span>, err.message);
+  });
+
+  <span class="hljs-comment">// Send a message</span>
+  socket.emit(<span class="hljs-string">'chat'</span>, { <span class="hljs-attr">room</span>: <span class="hljs-string">'general'</span>, <span class="hljs-attr">text</span>: <span class="hljs-string">'Hello everyone!'</span> });
+</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+</div></code></pre>
+<h3 id="socketio-key-emission-patterns">Socket.IO Key Emission Patterns</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// To the sender only</span>
+socket.emit(<span class="hljs-string">'event'</span>, data);
+
+<span class="hljs-comment">// To everyone except the sender</span>
+socket.broadcast.emit(<span class="hljs-string">'event'</span>, data);
+
+<span class="hljs-comment">// To a specific room</span>
+io.to(<span class="hljs-string">'room1'</span>).emit(<span class="hljs-string">'event'</span>, data);
+
+<span class="hljs-comment">// To multiple rooms</span>
+io.to(<span class="hljs-string">'room1'</span>).to(<span class="hljs-string">'room2'</span>).emit(<span class="hljs-string">'event'</span>, data);
+
+<span class="hljs-comment">// To a specific socket by ID</span>
+io.to(socketId).emit(<span class="hljs-string">'event'</span>, data);
+
+<span class="hljs-comment">// To everyone in a room except sender</span>
+socket.to(<span class="hljs-string">'room1'</span>).emit(<span class="hljs-string">'event'</span>, data);
+
+<span class="hljs-comment">// To everyone on the server</span>
+io.emit(<span class="hljs-string">'event'</span>, data);
+</div></code></pre>
+<h3 id="ws-vs-socketio">ws vs Socket.IO</h3>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th><code>ws</code></th>
+<th>Socket.IO</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Protocol</td>
+<td>Pure WebSocket</td>
+<td>WS + custom protocol</td>
+</tr>
+<tr>
+<td>Bundle size</td>
+<td>Tiny</td>
+<td>~45KB (client)</td>
+</tr>
+<tr>
+<td>Auto-reconnect</td>
+<td>❌ Manual</td>
+<td>✅ Built-in</td>
+</tr>
+<tr>
+<td>Rooms</td>
+<td>❌ Manual</td>
+<td>✅ Built-in</td>
+</tr>
+<tr>
+<td>Namespaces</td>
+<td>❌</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Fallback transports</td>
+<td>❌</td>
+<td>✅ (polling)</td>
+</tr>
+<tr>
+<td>Acknowledgements</td>
+<td>❌</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Broadcast</td>
+<td>Manual</td>
+<td>Built-in</td>
+</tr>
+<tr>
+<td>Binary</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Learning curve</td>
+<td>Low</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td>Use when...</td>
+<td>Full control</td>
+<td>Feature-rich apps</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="17-binary-data--streams">17. Binary Data &amp; Streams</h2>
+<h3 id="sending-binary-from-server">Sending Binary from Server</h3>
+<pre class="hljs"><code><div>wss.on(<span class="hljs-string">'connection'</span>, (ws) =&gt; {
+  <span class="hljs-comment">// Send a Buffer</span>
+  <span class="hljs-keyword">const</span> buf = Buffer.from([<span class="hljs-number">0x01</span>, <span class="hljs-number">0x02</span>, <span class="hljs-number">0x03</span>, <span class="hljs-number">0x04</span>]);
+  ws.send(buf);
+
+  <span class="hljs-comment">// Send an image file</span>
+  <span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
+  <span class="hljs-keyword">const</span> image = fs.readFileSync(<span class="hljs-string">'./photo.jpg'</span>);
+  ws.send(image);
+});
+</div></code></pre>
+<h3 id="receiving-binary-on-server">Receiving Binary on Server</h3>
+<pre class="hljs"><code><div>ws.on(<span class="hljs-string">'message'</span>, (data, isBinary) =&gt; {
+  <span class="hljs-keyword">if</span> (isBinary) {
+    <span class="hljs-comment">// data is a Buffer</span>
+    <span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
+    fs.writeFileSync(<span class="hljs-string">`./uploads/<span class="hljs-subst">${<span class="hljs-built_in">Date</span>.now()}</span>.bin`</span>, data);
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`Saved <span class="hljs-subst">${data.length}</span> bytes`</span>);
+  }
+});
+</div></code></pre>
+<h3 id="streaming-large-files-in-chunks">Streaming Large Files in Chunks</h3>
+<p>Avoid sending huge files in one frame. Break them into chunks:</p>
+<pre class="hljs"><code><div><span class="hljs-comment">// Server: send a file in chunks</span>
+<span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">sendFileInChunks</span>(<span class="hljs-params">ws, filePath, chunkSize = <span class="hljs-number">64</span> * <span class="hljs-number">1024</span></span>) </span>{
+  <span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
+  <span class="hljs-keyword">const</span> stat = fs.statSync(filePath);
+  <span class="hljs-keyword">const</span> totalChunks = <span class="hljs-built_in">Math</span>.ceil(stat.size / chunkSize);
+  <span class="hljs-keyword">const</span> stream = fs.createReadStream(filePath, { <span class="hljs-attr">highWaterMark</span>: chunkSize });
+
+  <span class="hljs-keyword">let</span> chunkIndex = <span class="hljs-number">0</span>;
+
+  <span class="hljs-comment">// Send file metadata first</span>
+  ws.send(<span class="hljs-built_in">JSON</span>.stringify({
+    <span class="hljs-attr">type</span>: <span class="hljs-string">'file_start'</span>,
+    <span class="hljs-attr">name</span>: <span class="hljs-built_in">require</span>(<span class="hljs-string">'path'</span>).basename(filePath),
+    <span class="hljs-attr">size</span>: stat.size,
+    <span class="hljs-attr">chunks</span>: totalChunks,
+  }));
+
+  <span class="hljs-keyword">for</span> <span class="hljs-keyword">await</span> (<span class="hljs-keyword">const</span> chunk <span class="hljs-keyword">of</span> stream) {
+    <span class="hljs-comment">// Send chunk index as first 4 bytes, then the data</span>
+    <span class="hljs-keyword">const</span> frame = Buffer.allocUnsafe(<span class="hljs-number">4</span> + chunk.length);
+    frame.writeUInt32BE(chunkIndex, <span class="hljs-number">0</span>);
+    chunk.copy(frame, <span class="hljs-number">4</span>);
+    ws.send(frame);
+    chunkIndex++;
+  }
+
+  ws.send(<span class="hljs-built_in">JSON</span>.stringify({ <span class="hljs-attr">type</span>: <span class="hljs-string">'file_end'</span> }));
+}
+</div></code></pre>
+<pre class="hljs"><code><div><span class="hljs-comment">// Client: reassemble chunks</span>
+<span class="hljs-keyword">const</span> chunks = [];
+<span class="hljs-keyword">let</span> totalChunks = <span class="hljs-number">0</span>;
+
+ws.onmessage = <span class="hljs-function">(<span class="hljs-params">event</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> event.data === <span class="hljs-string">'string'</span>) {
+    <span class="hljs-keyword">const</span> msg = <span class="hljs-built_in">JSON</span>.parse(event.data);
+    <span class="hljs-keyword">if</span> (msg.type === <span class="hljs-string">'file_start'</span>) {
+      totalChunks = msg.chunks;
+      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`Receiving <span class="hljs-subst">${msg.name}</span> (<span class="hljs-subst">${msg.size}</span> bytes, <span class="hljs-subst">${totalChunks}</span> chunks)`</span>);
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (msg.type === <span class="hljs-string">'file_end'</span>) {
+      <span class="hljs-keyword">const</span> blob = <span class="hljs-keyword">new</span> Blob(chunks.sort(<span class="hljs-function">(<span class="hljs-params">a, b</span>) =&gt;</span> a.index - b.index).map(<span class="hljs-function"><span class="hljs-params">c</span> =&gt;</span> c.data));
+      <span class="hljs-keyword">const</span> url = URL.createObjectURL(blob);
+      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'File ready:'</span>, url);
+    }
+  } <span class="hljs-keyword">else</span> {
+    <span class="hljs-comment">// Binary chunk</span>
+    event.data.arrayBuffer().then(<span class="hljs-function"><span class="hljs-params">buf</span> =&gt;</span> {
+      <span class="hljs-keyword">const</span> view = <span class="hljs-keyword">new</span> <span class="hljs-built_in">DataView</span>(buf);
+      <span class="hljs-keyword">const</span> index = view.getUint32(<span class="hljs-number">0</span>);
+      <span class="hljs-keyword">const</span> data = buf.slice(<span class="hljs-number">4</span>);
+      chunks.push({ index, data });
+    });
+  }
+};
+</div></code></pre>
+<hr>
+<h2 id="18-rate-limiting--backpressure">18. Rate Limiting &amp; Backpressure</h2>
+<h3 id="message-rate-limiting-per-client">Message Rate Limiting per Client</h3>
+<pre class="hljs"><code><div>wss.on(<span class="hljs-string">'connection'</span>, (ws) =&gt; {
+  <span class="hljs-keyword">const</span> RATE_LIMIT = <span class="hljs-number">10</span>;   <span class="hljs-comment">// Max messages</span>
+  <span class="hljs-keyword">const</span> WINDOW_MS = <span class="hljs-number">1000</span>;  <span class="hljs-comment">// Per second</span>
+
+  <span class="hljs-keyword">let</span> messageCount = <span class="hljs-number">0</span>;
+  <span class="hljs-keyword">let</span> windowStart = <span class="hljs-built_in">Date</span>.now();
+
+  ws.on(<span class="hljs-string">'message'</span>, (data) =&gt; {
+    <span class="hljs-keyword">const</span> now = <span class="hljs-built_in">Date</span>.now();
+
+    <span class="hljs-comment">// Reset window if expired</span>
+    <span class="hljs-keyword">if</span> (now - windowStart &gt; WINDOW_MS) {
+      messageCount = <span class="hljs-number">0</span>;
+      windowStart = now;
+    }
+
+    messageCount++;
+
+    <span class="hljs-keyword">if</span> (messageCount &gt; RATE_LIMIT) {
+      ws.send(<span class="hljs-built_in">JSON</span>.stringify({ <span class="hljs-attr">type</span>: <span class="hljs-string">'error'</span>, <span class="hljs-attr">message</span>: <span class="hljs-string">'Rate limit exceeded. Slow down.'</span> }));
+      <span class="hljs-comment">// Optional: disconnect repeat offenders</span>
+      <span class="hljs-comment">// ws.close(1008, 'Rate limit exceeded');</span>
+      <span class="hljs-keyword">return</span>;
+    }
+
+    handleMessage(ws, data);
+  });
+});
+</div></code></pre>
+<h3 id="handling-backpressure-on-the-server">Handling Backpressure on the Server</h3>
+<p>When sending fast, the server's write buffer can fill up. Handle this with <code>ws.bufferedAmount</code>:</p>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">safeSend</span>(<span class="hljs-params">ws, data</span>) </span>{
+  <span class="hljs-comment">// Check if the socket's internal buffer is too full</span>
+  <span class="hljs-keyword">if</span> (ws.bufferedAmount &gt; <span class="hljs-number">1024</span> * <span class="hljs-number">1024</span>) { <span class="hljs-comment">// 1MB threshold</span>
+    <span class="hljs-built_in">console</span>.warn(<span class="hljs-string">'Client buffer full, skipping message'</span>);
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+  }
+  ws.send(data);
+  <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+}
+
+<span class="hljs-comment">// For streaming scenarios, use the drain event</span>
+ws.on(<span class="hljs-string">'drain'</span>, () =&gt; {
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Buffer drained, can send more'</span>);
+});
+</div></code></pre>
+<hr>
+<h2 id="19-scaling-websockets-redis-pubsub">19. Scaling WebSockets (Redis Pub/Sub)</h2>
+<p>A single Node.js process can't share WebSocket state across multiple instances. Use <strong>Redis Pub/Sub</strong> as a message bus.</p>
+<pre class="hljs"><code><div>npm install ioredis
+</div></code></pre>
+<h3 id="architecture">Architecture</h3>
+<pre class="hljs"><code><div>Client A → Node Instance 1 → Redis PUBLISH → Node Instance 2 → Client B
+                           → Redis PUBLISH → Node Instance 3 → Client C
+</div></code></pre>
+<h3 id="server-with-redis-pubsub">Server with Redis Pub/Sub</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// server/scaling.js</span>
+<span class="hljs-keyword">const</span> WebSocket = <span class="hljs-built_in">require</span>(<span class="hljs-string">'ws'</span>);
+<span class="hljs-keyword">const</span> Redis = <span class="hljs-built_in">require</span>(<span class="hljs-string">'ioredis'</span>);
+
+<span class="hljs-keyword">const</span> CHANNEL = <span class="hljs-string">'ws_broadcast'</span>;
+
+<span class="hljs-keyword">const</span> publisher  = <span class="hljs-keyword">new</span> Redis({ <span class="hljs-attr">host</span>: <span class="hljs-string">'localhost'</span>, <span class="hljs-attr">port</span>: <span class="hljs-number">6379</span> });
+<span class="hljs-keyword">const</span> subscriber = <span class="hljs-keyword">new</span> Redis({ <span class="hljs-attr">host</span>: <span class="hljs-string">'localhost'</span>, <span class="hljs-attr">port</span>: <span class="hljs-number">6379</span> });
+
+subscriber.subscribe(CHANNEL);
+
+<span class="hljs-keyword">const</span> wss = <span class="hljs-keyword">new</span> WebSocket.Server({ <span class="hljs-attr">port</span>: process.env.PORT || <span class="hljs-number">8080</span> });
+
+<span class="hljs-comment">// When Redis receives a message, broadcast to all local clients</span>
+subscriber.on(<span class="hljs-string">'message'</span>, (channel, message) =&gt; {
+  <span class="hljs-keyword">if</span> (channel === CHANNEL) {
+    wss.clients.forEach(<span class="hljs-function"><span class="hljs-params">client</span> =&gt;</span> {
+      <span class="hljs-keyword">if</span> (client.readyState === WebSocket.OPEN) {
+        client.send(message);
+      }
+    });
+  }
+});
+
+wss.on(<span class="hljs-string">'connection'</span>, (ws) =&gt; {
+  ws.on(<span class="hljs-string">'message'</span>, <span class="hljs-keyword">async</span> (data) =&gt; {
+    <span class="hljs-keyword">const</span> msg = data.toString();
+    <span class="hljs-comment">// Publish to Redis so ALL instances broadcast it</span>
+    <span class="hljs-keyword">await</span> publisher.publish(CHANNEL, msg);
+  });
+
+  ws.on(<span class="hljs-string">'close'</span>, () =&gt; {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Client disconnected'</span>);
+  });
+});
+
+<span class="hljs-built_in">console</span>.log(<span class="hljs-string">`WebSocket server on port <span class="hljs-subst">${process.env.PORT || <span class="hljs-number">8080</span>}</span>`</span>);
+</div></code></pre>
+<h3 id="socketio-with-redis-adapter">Socket.IO with Redis Adapter</h3>
+<pre class="hljs"><code><div>npm install @socket.io/redis-adapter ioredis
+</div></code></pre>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> { createServer } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'http'</span>);
+<span class="hljs-keyword">const</span> { Server } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'socket.io'</span>);
+<span class="hljs-keyword">const</span> { createAdapter } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'@socket.io/redis-adapter'</span>);
+<span class="hljs-keyword">const</span> { createClient } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'redis'</span>);
+
+<span class="hljs-keyword">const</span> httpServer = createServer();
+<span class="hljs-keyword">const</span> io = <span class="hljs-keyword">new</span> Server(httpServer);
+
+<span class="hljs-keyword">const</span> pubClient = createClient({ <span class="hljs-attr">url</span>: <span class="hljs-string">'redis://localhost:6379'</span> });
+<span class="hljs-keyword">const</span> subClient = pubClient.duplicate();
+
+<span class="hljs-built_in">Promise</span>.all([pubClient.connect(), subClient.connect()]).then(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+  io.adapter(createAdapter(pubClient, subClient));
+
+  io.on(<span class="hljs-string">'connection'</span>, (socket) =&gt; {
+    socket.on(<span class="hljs-string">'chat'</span>, (msg) =&gt; {
+      <span class="hljs-comment">// Broadcasts across ALL Socket.IO instances via Redis</span>
+      io.emit(<span class="hljs-string">'chat'</span>, msg);
+    });
+  });
+
+  httpServer.listen(<span class="hljs-number">3000</span>);
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Clustered Socket.IO on :3000'</span>);
+});
+</div></code></pre>
+<hr>
+<h2 id="20-error-handling--debugging">20. Error Handling &amp; Debugging</h2>
+<h3 id="comprehensive-error-handling">Comprehensive Error Handling</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// server/error-handling.js</span>
+<span class="hljs-keyword">const</span> WebSocket = <span class="hljs-built_in">require</span>(<span class="hljs-string">'ws'</span>);
+
+<span class="hljs-keyword">const</span> wss = <span class="hljs-keyword">new</span> WebSocket.Server({ <span class="hljs-attr">port</span>: <span class="hljs-number">8080</span> });
+
+<span class="hljs-comment">// Server-level errors</span>
+wss.on(<span class="hljs-string">'error'</span>, (err) =&gt; {
+  <span class="hljs-built_in">console</span>.error(<span class="hljs-string">'[Server Error]'</span>, err.message);
+  <span class="hljs-comment">// Could restart or alert monitoring</span>
+});
+
+wss.on(<span class="hljs-string">'connection'</span>, (ws, req) =&gt; {
+  <span class="hljs-comment">// Per-connection errors</span>
+  ws.on(<span class="hljs-string">'error'</span>, (err) =&gt; {
+    <span class="hljs-comment">// Common errors:</span>
+    <span class="hljs-comment">// ECONNRESET — client forcibly closed the TCP connection</span>
+    <span class="hljs-comment">// EPIPE      — tried to write to a closed socket</span>
+    <span class="hljs-keyword">if</span> (err.code !== <span class="hljs-string">'ECONNRESET'</span> &amp;&amp; err.code !== <span class="hljs-string">'EPIPE'</span>) {
+      <span class="hljs-built_in">console</span>.error(<span class="hljs-string">'[WebSocket Error]'</span>, err.code, err.message);
+    }
+    <span class="hljs-comment">// The 'close' event will fire after 'error'</span>
+  });
+
+  ws.on(<span class="hljs-string">'message'</span>, (data) =&gt; {
+    <span class="hljs-keyword">try</span> {
+      <span class="hljs-keyword">const</span> msg = <span class="hljs-built_in">JSON</span>.parse(data.toString());
+      processMessage(ws, msg);
+    } <span class="hljs-keyword">catch</span> (err) {
+      <span class="hljs-built_in">console</span>.error(<span class="hljs-string">'[Message Error]'</span>, err.message);
+      safeClose(ws, <span class="hljs-number">1007</span>, <span class="hljs-string">'Invalid payload'</span>);
+    }
+  });
+});
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">safeClose</span>(<span class="hljs-params">ws, code = <span class="hljs-number">1000</span>, reason = <span class="hljs-string">''</span></span>) </span>{
+  <span class="hljs-keyword">try</span> {
+    <span class="hljs-keyword">if</span> (ws.readyState === WebSocket.OPEN) {
+      ws.close(code, reason);
+    } <span class="hljs-keyword">else</span> {
+      ws.terminate();
+    }
+  } <span class="hljs-keyword">catch</span> (err) {
+    <span class="hljs-built_in">console</span>.error(<span class="hljs-string">'Error during close:'</span>, err.message);
+  }
+}
+
+<span class="hljs-comment">// Graceful shutdown</span>
+process.on(<span class="hljs-string">'SIGINT'</span>, () =&gt; {
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Shutting down gracefully...'</span>);
+  wss.clients.forEach(<span class="hljs-function"><span class="hljs-params">client</span> =&gt;</span> client.close(<span class="hljs-number">1001</span>, <span class="hljs-string">'Server shutting down'</span>));
+  wss.close(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Server closed'</span>);
+    process.exit(<span class="hljs-number">0</span>);
+  });
+});
+</div></code></pre>
+<h3 id="debugging-in-the-browser">Debugging in the Browser</h3>
+<p>Open DevTools → <strong>Network tab</strong> → Filter by <strong>WS</strong>:</p>
+<ul>
+<li>Click a WebSocket connection to inspect it</li>
+<li>Go to <strong>Messages</strong> sub-tab to see all frames sent and received</li>
+<li>Green = sent by client, White/grey = received from server</li>
+</ul>
+<h3 id="debugging-with-wscat-cli-tool">Debugging with wscat (CLI tool)</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Install globally</span>
+npm install -g wscat
+
+<span class="hljs-comment"># Connect to a WS server</span>
+wscat -c ws://localhost:8080
+
+<span class="hljs-comment"># Connect with headers</span>
+wscat -c ws://localhost:8080 -H <span class="hljs-string">"Authorization: Bearer TOKEN"</span>
+
+<span class="hljs-comment"># Connect to secure server</span>
+wscat -c wss://example.com/ws
+</div></code></pre>
+<h3 id="logging-middleware">Logging Middleware</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">withLogging</span>(<span class="hljs-params">wss</span>) </span>{
+  wss.on(<span class="hljs-string">'connection'</span>, (ws, req) =&gt; {
+    <span class="hljs-keyword">const</span> ip = req.socket.remoteAddress;
+    <span class="hljs-keyword">const</span> id = <span class="hljs-built_in">Math</span>.random().toString(<span class="hljs-number">36</span>).slice(<span class="hljs-number">2</span>, <span class="hljs-number">9</span>);
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`[<span class="hljs-subst">${id}</span>] CONNECT from <span class="hljs-subst">${ip}</span>`</span>);
+
+    <span class="hljs-keyword">const</span> originalSend = ws.send.bind(ws);
+    ws.send = <span class="hljs-function">(<span class="hljs-params">data, ...args</span>) =&gt;</span> {
+      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`[<span class="hljs-subst">${id}</span>] SEND:`</span>, <span class="hljs-keyword">typeof</span> data === <span class="hljs-string">'string'</span> ? data.slice(<span class="hljs-number">0</span>, <span class="hljs-number">200</span>) : <span class="hljs-string">`&lt;binary <span class="hljs-subst">${data.length}</span> bytes&gt;`</span>);
+      <span class="hljs-keyword">return</span> originalSend(data, ...args);
+    };
+
+    ws.on(<span class="hljs-string">'message'</span>, (data) =&gt; {
+      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`[<span class="hljs-subst">${id}</span>] RECV:`</span>, data.toString().slice(<span class="hljs-number">0</span>, <span class="hljs-number">200</span>));
+    });
+
+    ws.on(<span class="hljs-string">'close'</span>, (code, reason) =&gt; {
+      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`[<span class="hljs-subst">${id}</span>] CLOSE: <span class="hljs-subst">${code}</span> <span class="hljs-subst">${reason}</span>`</span>);
+    });
+  });
+}
+
+withLogging(wss);
+</div></code></pre>
+<hr>
+<h2 id="21-security-best-practices">21. Security Best Practices</h2>
+<h3 id="1-always-use-wss-in-production">1. Always Use <code>wss://</code> in Production</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// ❌ Development only</span>
+<span class="hljs-keyword">const</span> ws = <span class="hljs-keyword">new</span> WebSocket(<span class="hljs-string">'ws://example.com'</span>);
+
+<span class="hljs-comment">// ✅ Production (TLS-encrypted)</span>
+<span class="hljs-keyword">const</span> ws = <span class="hljs-keyword">new</span> WebSocket(<span class="hljs-string">'wss://example.com'</span>);
+</div></code></pre>
+<p>Configure TLS on your Node.js server:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> https = <span class="hljs-built_in">require</span>(<span class="hljs-string">'https'</span>);
+<span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
+<span class="hljs-keyword">const</span> WebSocket = <span class="hljs-built_in">require</span>(<span class="hljs-string">'ws'</span>);
+
+<span class="hljs-keyword">const</span> server = https.createServer({
+  <span class="hljs-attr">cert</span>: fs.readFileSync(<span class="hljs-string">'/etc/letsencrypt/live/example.com/fullchain.pem'</span>),
+  <span class="hljs-attr">key</span>:  fs.readFileSync(<span class="hljs-string">'/etc/letsencrypt/live/example.com/privkey.pem'</span>),
+});
+
+<span class="hljs-keyword">const</span> wss = <span class="hljs-keyword">new</span> WebSocket.Server({ server });
+server.listen(<span class="hljs-number">443</span>);
+</div></code></pre>
+<h3 id="2-validate-the-origin-header">2. Validate the Origin Header</h3>
+<p>Prevent Cross-Site WebSocket Hijacking (CSWSH):</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> wss = <span class="hljs-keyword">new</span> WebSocket.Server({
+  <span class="hljs-attr">port</span>: <span class="hljs-number">8080</span>,
+  <span class="hljs-attr">verifyClient</span>: <span class="hljs-function">(<span class="hljs-params">info</span>) =&gt;</span> {
+    <span class="hljs-keyword">const</span> origin = info.origin || info.req.headers.origin;
+    <span class="hljs-keyword">const</span> allowedOrigins = [<span class="hljs-string">'https://myapp.com'</span>, <span class="hljs-string">'https://www.myapp.com'</span>];
+
+    <span class="hljs-keyword">if</span> (!allowedOrigins.includes(origin)) {
+      <span class="hljs-built_in">console</span>.warn(<span class="hljs-string">`Rejected connection from origin: <span class="hljs-subst">${origin}</span>`</span>);
+      <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>; <span class="hljs-comment">// Reject</span>
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>; <span class="hljs-comment">// Accept</span>
+  },
+});
+</div></code></pre>
+<h3 id="3-sanitize-all-input">3. Sanitize All Input</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">sanitize</span>(<span class="hljs-params">str, maxLen = <span class="hljs-number">1000</span></span>) </span>{
+  <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> str !== <span class="hljs-string">'string'</span>) <span class="hljs-keyword">return</span> <span class="hljs-string">''</span>;
+  <span class="hljs-keyword">return</span> str.trim().slice(<span class="hljs-number">0</span>, maxLen);
+}
+
+ws.on(<span class="hljs-string">'message'</span>, (raw) =&gt; {
+  <span class="hljs-keyword">let</span> msg;
+  <span class="hljs-keyword">try</span> {
+    msg = <span class="hljs-built_in">JSON</span>.parse(raw.toString());
+  } <span class="hljs-keyword">catch</span> {
+    <span class="hljs-keyword">return</span> ws.close(<span class="hljs-number">1007</span>, <span class="hljs-string">'Invalid JSON'</span>);
+  }
+
+  <span class="hljs-comment">// Validate each field</span>
+  <span class="hljs-keyword">if</span> (msg.type !== <span class="hljs-string">'chat'</span> &amp;&amp; msg.type !== <span class="hljs-string">'join'</span>) {
+    <span class="hljs-keyword">return</span> ws.close(<span class="hljs-number">1008</span>, <span class="hljs-string">'Unknown type'</span>);
+  }
+
+  msg.text = sanitize(msg.text);
+  processMessage(ws, msg);
+});
+</div></code></pre>
+<h3 id="4-limit-message-size">4. Limit Message Size</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> wss = <span class="hljs-keyword">new</span> WebSocket.Server({
+  <span class="hljs-attr">port</span>: <span class="hljs-number">8080</span>,
+  <span class="hljs-attr">maxPayload</span>: <span class="hljs-number">100</span> * <span class="hljs-number">1024</span>, <span class="hljs-comment">// 100 KB max message size</span>
+});
+</div></code></pre>
+<h3 id="5-rate-limit-connections">5. Rate Limit Connections</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> connectionCounts = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Map</span>(); <span class="hljs-comment">// IP -&gt; count</span>
+
+wss.on(<span class="hljs-string">'connection'</span>, (ws, req) =&gt; {
+  <span class="hljs-keyword">const</span> ip = req.socket.remoteAddress;
+  <span class="hljs-keyword">const</span> MAX_CONNECTIONS_PER_IP = <span class="hljs-number">5</span>;
+  <span class="hljs-keyword">const</span> current = connectionCounts.get(ip) || <span class="hljs-number">0</span>;
+
+  <span class="hljs-keyword">if</span> (current &gt;= MAX_CONNECTIONS_PER_IP) {
+    ws.close(<span class="hljs-number">1008</span>, <span class="hljs-string">'Too many connections'</span>);
+    <span class="hljs-keyword">return</span>;
+  }
+
+  connectionCounts.set(ip, current + <span class="hljs-number">1</span>);
+
+  ws.on(<span class="hljs-string">'close'</span>, () =&gt; {
+    <span class="hljs-keyword">const</span> count = connectionCounts.get(ip) - <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">if</span> (count &lt;= <span class="hljs-number">0</span>) connectionCounts.delete(ip);
+    <span class="hljs-keyword">else</span> connectionCounts.set(ip, count);
+  });
+});
+</div></code></pre>
+<h3 id="6-use-helmet-with-express-http-headers">6. Use Helmet with Express (HTTP Headers)</h3>
+<pre class="hljs"><code><div>npm install helmet
+</div></code></pre>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> helmet = <span class="hljs-built_in">require</span>(<span class="hljs-string">'helmet'</span>);
+app.use(helmet()); <span class="hljs-comment">// Sets secure HTTP headers</span>
+</div></code></pre>
+<h3 id="7-never-trust-client-data">7. Never Trust Client Data</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// ❌ Never do this</span>
+ws.on(<span class="hljs-string">'message'</span>, (data) =&gt; {
+  <span class="hljs-keyword">const</span> { userId } = <span class="hljs-built_in">JSON</span>.parse(data.toString());
+  <span class="hljs-comment">// Using userId from client — client can send ANY userId!</span>
+  deleteUser(userId);
+});
+
+<span class="hljs-comment">// ✅ Always use server-side session data</span>
+ws.on(<span class="hljs-string">'message'</span>, (data) =&gt; {
+  <span class="hljs-keyword">const</span> { action } = <span class="hljs-built_in">JSON</span>.parse(data.toString());
+  <span class="hljs-keyword">const</span> userId = ws.user.id; <span class="hljs-comment">// From verified JWT/session</span>
+  <span class="hljs-keyword">if</span> (action === <span class="hljs-string">'delete'</span>) deleteUser(userId);
+});
+</div></code></pre>
+<h3 id="security-checklist">Security Checklist</h3>
+<ul>
+<li><input type="checkbox" id="checkbox0"><label for="checkbox0"></label><code>wss://</code> (TLS) in production</li>
+<li><input type="checkbox" id="checkbox1"><label for="checkbox1">Origin header validation</label></li>
+<li><input type="checkbox" id="checkbox2"><label for="checkbox2">JWT / session authentication</label></li>
+<li><input type="checkbox" id="checkbox3"><label for="checkbox3">Input validation and sanitization</label></li>
+<li><input type="checkbox" id="checkbox4"><label for="checkbox4">Max payload size configured</label></li>
+<li><input type="checkbox" id="checkbox5"><label for="checkbox5">Rate limiting (messages &amp; connections)</label></li>
+<li><input type="checkbox" id="checkbox6"><label for="checkbox6">No sensitive data in close reason strings</label></li>
+<li><input type="checkbox" id="checkbox7"><label for="checkbox7">Dependency audit (</label><code>npm audit</code>)</li>
+<li><input type="checkbox" id="checkbox8"><label for="checkbox8">Server-side state only for authorization</label></li>
+</ul>
+<hr>
+<h2 id="22-testing-websocket-servers">22. Testing WebSocket Servers</h2>
+<h3 id="unit-testing-with-jest--ws">Unit Testing with Jest + <code>ws</code></h3>
+<pre class="hljs"><code><div>npm install --save-dev jest ws
+</div></code></pre>
+<pre class="hljs"><code><div><span class="hljs-comment">// tests/ws.test.js</span>
+<span class="hljs-keyword">const</span> WebSocket = <span class="hljs-built_in">require</span>(<span class="hljs-string">'ws'</span>);
+
+<span class="hljs-comment">// Import the server factory (not auto-started)</span>
+<span class="hljs-keyword">const</span> { createServer } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../server/chat'</span>); <span class="hljs-comment">// export wss separately</span>
+
+<span class="hljs-keyword">let</span> wss;
+<span class="hljs-keyword">let</span> port;
+
+beforeEach(<span class="hljs-function">(<span class="hljs-params">done</span>) =&gt;</span> {
+  wss = createServer(<span class="hljs-number">0</span>); <span class="hljs-comment">// port 0 = random available port</span>
+  wss.on(<span class="hljs-string">'listening'</span>, () =&gt; {
+    port = wss.address().port;
+    done();
+  });
+});
+
+afterEach(<span class="hljs-function">(<span class="hljs-params">done</span>) =&gt;</span> {
+  wss.close(done);
+});
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">connectClient</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resolve, reject</span>) =&gt;</span> {
+    <span class="hljs-keyword">const</span> ws = <span class="hljs-keyword">new</span> WebSocket(<span class="hljs-string">`ws://localhost:<span class="hljs-subst">${port}</span>`</span>);
+    ws.on(<span class="hljs-string">'open'</span>, () =&gt; resolve(ws));
+    ws.on(<span class="hljs-string">'error'</span>, reject);
+  });
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">waitForMessage</span>(<span class="hljs-params">ws</span>) </span>{
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resolve</span>) =&gt;</span> {
+    ws.once(<span class="hljs-string">'message'</span>, (data) =&gt; resolve(<span class="hljs-built_in">JSON</span>.parse(data.toString())));
+  });
+}
+
+test(<span class="hljs-string">'Server sends welcome on connect'</span>, <span class="hljs-keyword">async</span> () =&gt; {
+  <span class="hljs-keyword">const</span> ws = <span class="hljs-keyword">await</span> connectClient();
+  <span class="hljs-keyword">const</span> msg = <span class="hljs-keyword">await</span> waitForMessage(ws);
+  expect(msg.type).toBe(<span class="hljs-string">'welcome'</span>);
+  ws.close();
+});
+
+test(<span class="hljs-string">'Echo works correctly'</span>, <span class="hljs-keyword">async</span> () =&gt; {
+  <span class="hljs-keyword">const</span> ws = <span class="hljs-keyword">await</span> connectClient();
+  <span class="hljs-keyword">await</span> waitForMessage(ws); <span class="hljs-comment">// Consume welcome</span>
+
+  ws.send(<span class="hljs-built_in">JSON</span>.stringify({ <span class="hljs-attr">type</span>: <span class="hljs-string">'echo'</span>, <span class="hljs-attr">text</span>: <span class="hljs-string">'hello'</span> }));
+  <span class="hljs-keyword">const</span> response = <span class="hljs-keyword">await</span> waitForMessage(ws);
+
+  expect(response.type).toBe(<span class="hljs-string">'echo'</span>);
+  expect(response.text).toBe(<span class="hljs-string">'hello'</span>);
+  ws.close();
+});
+
+test(<span class="hljs-string">'Two clients receive broadcast'</span>, <span class="hljs-keyword">async</span> () =&gt; {
+  <span class="hljs-keyword">const</span> ws1 = <span class="hljs-keyword">await</span> connectClient();
+  <span class="hljs-keyword">const</span> ws2 = <span class="hljs-keyword">await</span> connectClient();
+
+  <span class="hljs-keyword">await</span> waitForMessage(ws1); <span class="hljs-comment">// welcome</span>
+  <span class="hljs-keyword">await</span> waitForMessage(ws2); <span class="hljs-comment">// welcome</span>
+
+  <span class="hljs-keyword">const</span> received = waitForMessage(ws2); <span class="hljs-comment">// ws2 waits for broadcast</span>
+
+  ws1.send(<span class="hljs-built_in">JSON</span>.stringify({ <span class="hljs-attr">type</span>: <span class="hljs-string">'broadcast'</span>, <span class="hljs-attr">text</span>: <span class="hljs-string">'hi from ws1'</span> }));
+
+  <span class="hljs-keyword">const</span> msg = <span class="hljs-keyword">await</span> received;
+  expect(msg.text).toBe(<span class="hljs-string">'hi from ws1'</span>);
+
+  ws1.close();
+  ws2.close();
+});
+</div></code></pre>
+<h3 id="exporting-the-server-for-testing">Exporting the Server for Testing</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// server/chat.js — testable structure</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">createServer</span>(<span class="hljs-params">port = <span class="hljs-number">8080</span></span>) </span>{
+  <span class="hljs-keyword">const</span> http = <span class="hljs-built_in">require</span>(<span class="hljs-string">'http'</span>);
+  <span class="hljs-keyword">const</span> httpServer = http.createServer();
+  <span class="hljs-keyword">const</span> wss = <span class="hljs-keyword">new</span> WebSocket.Server({ <span class="hljs-attr">server</span>: httpServer });
+
+  <span class="hljs-comment">// ... setup handlers ...</span>
+
+  httpServer.listen(port);
+  <span class="hljs-keyword">return</span> wss; <span class="hljs-comment">// expose for testing</span>
+}
+
+<span class="hljs-built_in">module</span>.exports = { createServer };
+</div></code></pre>
+<hr>
+<h2 id="23-production-deployment-nginx-pm2-docker">23. Production Deployment (Nginx, PM2, Docker)</h2>
+<h3 id="nginx-reverse-proxy-configuration">Nginx Reverse Proxy Configuration</h3>
+<p>WebSocket connections need specific headers to be proxied correctly:</p>
+<pre class="hljs"><code><div><span class="hljs-comment"># /etc/nginx/sites-available/myapp</span>
+<span class="hljs-section">server</span> {
+    <span class="hljs-attribute">listen</span> <span class="hljs-number">80</span>;
+    <span class="hljs-attribute">server_name</span> example.com;
+    <span class="hljs-attribute">return</span> <span class="hljs-number">301</span> https://<span class="hljs-variable">$host</span><span class="hljs-variable">$request_uri</span>;
+}
+
+<span class="hljs-section">server</span> {
+    <span class="hljs-attribute">listen</span> <span class="hljs-number">443</span> ssl;
+    <span class="hljs-attribute">server_name</span> example.com;
+
+    <span class="hljs-attribute">ssl_certificate</span>     /etc/letsencrypt/live/example.com/fullchain.pem;
+    <span class="hljs-attribute">ssl_certificate_key</span> /etc/letsencrypt/live/example.com/privkey.pem;
+
+    <span class="hljs-comment"># HTTP routes</span>
+    <span class="hljs-attribute">location</span> /api {
+        <span class="hljs-attribute">proxy_pass</span> http://localhost:3000;
+        <span class="hljs-attribute">proxy_http_version</span> <span class="hljs-number">1</span>.<span class="hljs-number">1</span>;
+        <span class="hljs-attribute">proxy_set_header</span> Host <span class="hljs-variable">$host</span>;
+        <span class="hljs-attribute">proxy_set_header</span> X-Real-IP <span class="hljs-variable">$remote_addr</span>;
+    }
+
+    <span class="hljs-comment"># WebSocket routes</span>
+    <span class="hljs-attribute">location</span> /ws {
+        <span class="hljs-attribute">proxy_pass</span> http://localhost:3000;
+        <span class="hljs-attribute">proxy_http_version</span> <span class="hljs-number">1</span>.<span class="hljs-number">1</span>;
+
+        <span class="hljs-comment"># Critical headers for WebSocket upgrade</span>
+        <span class="hljs-attribute">proxy_set_header</span> Upgrade <span class="hljs-variable">$http_upgrade</span>;
+        <span class="hljs-attribute">proxy_set_header</span> Connection <span class="hljs-string">"upgrade"</span>;
+
+        <span class="hljs-attribute">proxy_set_header</span> Host <span class="hljs-variable">$host</span>;
+        <span class="hljs-attribute">proxy_set_header</span> X-Real-IP <span class="hljs-variable">$remote_addr</span>;
+        <span class="hljs-attribute">proxy_set_header</span> X-Forwarded-For <span class="hljs-variable">$proxy_add_x_forwarded_for</span>;
+
+        <span class="hljs-comment"># WebSocket timeout settings</span>
+        <span class="hljs-attribute">proxy_read_timeout</span> <span class="hljs-number">86400s</span>;  <span class="hljs-comment"># 24 hours — prevent nginx from closing idle connections</span>
+        <span class="hljs-attribute">proxy_send_timeout</span> <span class="hljs-number">86400s</span>;
+    }
+}
+</div></code></pre>
+<h3 id="running-with-pm2">Running with PM2</h3>
+<pre class="hljs"><code><div>npm install -g pm2
+</div></code></pre>
+<pre class="hljs"><code><div><span class="hljs-comment">// ecosystem.config.js</span>
+<span class="hljs-built_in">module</span>.exports = {
+  <span class="hljs-attr">apps</span>: [
+    {
+      <span class="hljs-attr">name</span>: <span class="hljs-string">'ws-server'</span>,
+      <span class="hljs-attr">script</span>: <span class="hljs-string">'./server/index.js'</span>,
+      <span class="hljs-attr">instances</span>: <span class="hljs-string">'max'</span>,        <span class="hljs-comment">// Use all CPU cores</span>
+      <span class="hljs-attr">exec_mode</span>: <span class="hljs-string">'cluster'</span>,    <span class="hljs-comment">// Node.js cluster mode</span>
+      <span class="hljs-attr">watch</span>: <span class="hljs-literal">false</span>,
+      <span class="hljs-attr">env</span>: {
+        <span class="hljs-attr">NODE_ENV</span>: <span class="hljs-string">'production'</span>,
+        <span class="hljs-attr">PORT</span>: <span class="hljs-number">3000</span>,
+        <span class="hljs-attr">JWT_SECRET</span>: <span class="hljs-string">'your-production-secret'</span>,
+        <span class="hljs-attr">REDIS_URL</span>: <span class="hljs-string">'redis://localhost:6379'</span>,
+      },
+      <span class="hljs-attr">max_memory_restart</span>: <span class="hljs-string">'512M'</span>,
+      <span class="hljs-attr">error_file</span>: <span class="hljs-string">'./logs/err.log'</span>,
+      <span class="hljs-attr">out_file</span>: <span class="hljs-string">'./logs/out.log'</span>,
+    },
+  ],
+};
+</div></code></pre>
+<pre class="hljs"><code><div>pm2 start ecosystem.config.js
+pm2 save
+pm2 startup  <span class="hljs-comment"># Auto-start on reboot</span>
+</div></code></pre>
+<blockquote>
+<p><strong>Note:</strong> With PM2 cluster mode and WebSockets, use a Redis adapter (Socket.IO) or sticky sessions in Nginx to ensure a client always hits the same instance.</p>
+</blockquote>
+<h3 id="sticky-sessions-in-nginx-for-cluster">Sticky Sessions in Nginx (for Cluster)</h3>
+<pre class="hljs"><code><div><span class="hljs-attribute">upstream</span> ws_backend {
+    ip_hash; <span class="hljs-comment"># Sticky sessions based on client IP</span>
+    <span class="hljs-attribute">server</span> localhost:<span class="hljs-number">3001</span>;
+    <span class="hljs-attribute">server</span> localhost:<span class="hljs-number">3002</span>;
+    <span class="hljs-attribute">server</span> localhost:<span class="hljs-number">3003</span>;
+    <span class="hljs-attribute">server</span> localhost:<span class="hljs-number">3004</span>;
+}
+
+<span class="hljs-section">server</span> {
+    <span class="hljs-attribute">location</span> /ws {
+        <span class="hljs-attribute">proxy_pass</span> http://ws_backend;
+        <span class="hljs-attribute">proxy_http_version</span> <span class="hljs-number">1</span>.<span class="hljs-number">1</span>;
+        <span class="hljs-attribute">proxy_set_header</span> Upgrade <span class="hljs-variable">$http_upgrade</span>;
+        <span class="hljs-attribute">proxy_set_header</span> Connection <span class="hljs-string">"upgrade"</span>;
+    }
+}
+</div></code></pre>
+<h3 id="dockerfile">Dockerfile</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Dockerfile</span>
+<span class="hljs-keyword">FROM</span> node:<span class="hljs-number">20</span>-alpine
+
+<span class="hljs-keyword">WORKDIR</span><span class="bash"> /app</span>
+
+<span class="hljs-keyword">COPY</span><span class="bash"> package*.json ./</span>
+<span class="hljs-keyword">RUN</span><span class="bash"> npm ci --only=production</span>
+
+<span class="hljs-keyword">COPY</span><span class="bash"> . .</span>
+
+<span class="hljs-keyword">EXPOSE</span> <span class="hljs-number">3000</span>
+
+<span class="hljs-keyword">ENV</span> NODE_ENV=production
+
+<span class="hljs-keyword">CMD</span><span class="bash"> [<span class="hljs-string">"node"</span>, <span class="hljs-string">"server/index.js"</span>]</span>
+</div></code></pre>
+<pre class="hljs"><code><div><span class="hljs-comment"># docker-compose.yml</span>
+<span class="hljs-attr">version:</span> <span class="hljs-string">'3.8'</span>
+
+<span class="hljs-attr">services:</span>
+  <span class="hljs-attr">app:</span>
+    <span class="hljs-attr">build:</span> <span class="hljs-string">.</span>
+    <span class="hljs-attr">ports:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">"3000:3000"</span>
+    <span class="hljs-attr">environment:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">NODE_ENV=production</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">REDIS_URL=redis://redis:6379</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">JWT_SECRET=${JWT_SECRET}</span>
+    <span class="hljs-attr">depends_on:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">redis</span>
+    <span class="hljs-attr">restart:</span> <span class="hljs-string">unless-stopped</span>
+
+  <span class="hljs-attr">redis:</span>
+    <span class="hljs-attr">image:</span> <span class="hljs-string">redis:7-alpine</span>
+    <span class="hljs-attr">ports:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">"6379:6379"</span>
+    <span class="hljs-attr">volumes:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">redis_data:/data</span>
+    <span class="hljs-attr">restart:</span> <span class="hljs-string">unless-stopped</span>
+
+  <span class="hljs-attr">nginx:</span>
+    <span class="hljs-attr">image:</span> <span class="hljs-string">nginx:alpine</span>
+    <span class="hljs-attr">ports:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">"80:80"</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">"443:443"</span>
+    <span class="hljs-attr">volumes:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">./nginx.conf:/etc/nginx/conf.d/default.conf:ro</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">/etc/letsencrypt:/etc/letsencrypt:ro</span>
+    <span class="hljs-attr">depends_on:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">app</span>
+    <span class="hljs-attr">restart:</span> <span class="hljs-string">unless-stopped</span>
+
+<span class="hljs-attr">volumes:</span>
+  <span class="hljs-attr">redis_data:</span>
+</div></code></pre>
+<hr>
+<h2 id="24-performance-tuning">24. Performance Tuning</h2>
+<h3 id="nodejs-system-tuning">Node.js System Tuning</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Increase max file descriptors (each WS connection uses one)</span>
+<span class="hljs-built_in">ulimit</span> -n 100000
+
+<span class="hljs-comment"># Add to /etc/security/limits.conf for persistence:</span>
+<span class="hljs-comment"># * soft nofile 100000</span>
+<span class="hljs-comment"># * hard nofile 100000</span>
+</div></code></pre>
+<h3 id="nodejs-application-tuning">Node.js Application Tuning</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// Tune the HTTP server</span>
+<span class="hljs-keyword">const</span> server = http.createServer();
+server.maxHeadersCount = <span class="hljs-number">50</span>;
+server.setTimeout(<span class="hljs-number">0</span>); <span class="hljs-comment">// Disable default timeout for WS connections</span>
+
+<span class="hljs-comment">// Increase TCP socket buffer sizes</span>
+server.on(<span class="hljs-string">'connection'</span>, (socket) =&gt; {
+  socket.setNoDelay(<span class="hljs-literal">true</span>);       <span class="hljs-comment">// Disable Nagle's algorithm for low latency</span>
+  socket.setKeepAlive(<span class="hljs-literal">true</span>, <span class="hljs-number">60000</span>); <span class="hljs-comment">// TCP keepalive every 60s</span>
+});
+
+<span class="hljs-comment">// Use per-message deflate only when beneficial</span>
+<span class="hljs-keyword">const</span> wss = <span class="hljs-keyword">new</span> WebSocket.Server({
+  server,
+  <span class="hljs-attr">perMessageDeflate</span>: {
+    <span class="hljs-attr">threshold</span>: <span class="hljs-number">1024</span>, <span class="hljs-comment">// Only compress if payload &gt; 1KB</span>
+  },
+});
+</div></code></pre>
+<h3 id="json-performance">JSON Performance</h3>
+<p>For high-throughput servers, use faster JSON serializers:</p>
+<pre class="hljs"><code><div>npm install fast-json-stringify ajv
+</div></code></pre>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> fastJson = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fast-json-stringify'</span>);
+
+<span class="hljs-comment">// Pre-compile schemas for frequently sent message types</span>
+<span class="hljs-keyword">const</span> stringifyChatMsg = fastJson({
+  <span class="hljs-attr">type</span>: <span class="hljs-string">'object'</span>,
+  <span class="hljs-attr">properties</span>: {
+    <span class="hljs-attr">type</span>: { <span class="hljs-attr">type</span>: <span class="hljs-string">'string'</span> },
+    <span class="hljs-attr">text</span>: { <span class="hljs-attr">type</span>: <span class="hljs-string">'string'</span> },
+    <span class="hljs-attr">username</span>: { <span class="hljs-attr">type</span>: <span class="hljs-string">'string'</span> },
+    <span class="hljs-attr">timestamp</span>: { <span class="hljs-attr">type</span>: <span class="hljs-string">'integer'</span> },
+  },
+});
+
+<span class="hljs-comment">// ~2-5x faster than JSON.stringify for this schema</span>
+ws.send(stringifyChatMsg({ <span class="hljs-attr">type</span>: <span class="hljs-string">'chat'</span>, <span class="hljs-attr">text</span>: <span class="hljs-string">'hi'</span>, <span class="hljs-attr">username</span>: <span class="hljs-string">'alice'</span>, <span class="hljs-attr">timestamp</span>: <span class="hljs-built_in">Date</span>.now() }));
+</div></code></pre>
+<h3 id="measure-connection-stats">Measure Connection Stats</h3>
+<pre class="hljs"><code><div>setInterval(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+  <span class="hljs-keyword">let</span> open = <span class="hljs-number">0</span>, closing = <span class="hljs-number">0</span>, closed = <span class="hljs-number">0</span>;
+  wss.clients.forEach(<span class="hljs-function"><span class="hljs-params">ws</span> =&gt;</span> {
+    <span class="hljs-keyword">if</span> (ws.readyState === WebSocket.OPEN)    open++;
+    <span class="hljs-keyword">if</span> (ws.readyState === WebSocket.CLOSING) closing++;
+    <span class="hljs-keyword">if</span> (ws.readyState === WebSocket.CLOSED)  closed++;
+  });
+
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`[Stats] Open: <span class="hljs-subst">${open}</span> | Closing: <span class="hljs-subst">${closing}</span> | Closed: <span class="hljs-subst">${closed}</span> | Mem: <span class="hljs-subst">${
+    <span class="hljs-built_in">Math</span>.round(process.memoryUsage().heapUsed <span class="hljs-regexp">/ 1024 /</span> <span class="hljs-number">1024</span>)
+  }</span>MB`</span>);
+}, <span class="hljs-number">10000</span>);
+</div></code></pre>
+<hr>
+<h2 id="25-quick-reference-cheat-sheet">25. Quick Reference Cheat Sheet</h2>
+<h3 id="server-ws-library">Server (ws Library)</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> WebSocket = <span class="hljs-built_in">require</span>(<span class="hljs-string">'ws'</span>);
+<span class="hljs-keyword">const</span> wss = <span class="hljs-keyword">new</span> WebSocket.Server({ <span class="hljs-attr">port</span>: <span class="hljs-number">8080</span> });
+
+wss.on(<span class="hljs-string">'connection'</span>, (ws, req) =&gt; {
+  ws.send(<span class="hljs-string">'hello'</span>);                          <span class="hljs-comment">// Send text</span>
+  ws.send(Buffer.from([<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>]));             <span class="hljs-comment">// Send binary</span>
+
+  ws.on(<span class="hljs-string">'message'</span>, (data, isBinary) =&gt; {});  <span class="hljs-comment">// Receive</span>
+  ws.on(<span class="hljs-string">'close'</span>, (code, reason) =&gt; {});      <span class="hljs-comment">// Disconnected</span>
+  ws.on(<span class="hljs-string">'error'</span>, (err) =&gt; {});               <span class="hljs-comment">// Error</span>
+
+  ws.close(<span class="hljs-number">1000</span>, <span class="hljs-string">'Bye'</span>);                     <span class="hljs-comment">// Close gracefully</span>
+  ws.terminate();                            <span class="hljs-comment">// Force close</span>
+
+  ws.readyState; <span class="hljs-comment">// 0=CONNECTING, 1=OPEN, 2=CLOSING, 3=CLOSED</span>
+  ws.ping();     <span class="hljs-comment">// Send ping frame</span>
+});
+
+<span class="hljs-comment">// Broadcast to all</span>
+wss.clients.forEach(<span class="hljs-function"><span class="hljs-params">c</span> =&gt;</span> c.readyState === WebSocket.OPEN &amp;&amp; c.send(msg));
+</div></code></pre>
+<h3 id="browser-client">Browser Client</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> ws = <span class="hljs-keyword">new</span> WebSocket(<span class="hljs-string">'wss://example.com/ws'</span>);
+
+ws.onopen    = <span class="hljs-function">(<span class="hljs-params">e</span>) =&gt;</span> {};                  <span class="hljs-comment">// Connected</span>
+ws.onmessage = <span class="hljs-function">(<span class="hljs-params">e</span>) =&gt;</span> { e.data; };        <span class="hljs-comment">// Message received</span>
+ws.onclose   = <span class="hljs-function">(<span class="hljs-params">e</span>) =&gt;</span> { e.code; };        <span class="hljs-comment">// Disconnected</span>
+ws.onerror   = <span class="hljs-function">(<span class="hljs-params">e</span>) =&gt;</span> {};                 <span class="hljs-comment">// Error</span>
+
+ws.send(<span class="hljs-string">'text'</span>);                           <span class="hljs-comment">// Send string</span>
+ws.send(<span class="hljs-built_in">JSON</span>.stringify({ <span class="hljs-attr">type</span>: <span class="hljs-string">'msg'</span> })); <span class="hljs-comment">// Send JSON</span>
+ws.send(<span class="hljs-keyword">new</span> <span class="hljs-built_in">ArrayBuffer</span>(<span class="hljs-number">8</span>));              <span class="hljs-comment">// Send binary</span>
+
+ws.close();                               <span class="hljs-comment">// Close (code 1000)</span>
+ws.readyState;                            <span class="hljs-comment">// 0–3</span>
+</div></code></pre>
+<h3 id="socketio-emit-cheatsheet">Socket.IO Emit Cheatsheet</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// Server</span>
+socket.emit(<span class="hljs-string">'ev'</span>, data);                  <span class="hljs-comment">// → sender</span>
+socket.broadcast.emit(<span class="hljs-string">'ev'</span>, data);        <span class="hljs-comment">// → all except sender</span>
+io.emit(<span class="hljs-string">'ev'</span>, data);                      <span class="hljs-comment">// → everyone</span>
+io.to(<span class="hljs-string">'room'</span>).emit(<span class="hljs-string">'ev'</span>, data);           <span class="hljs-comment">// → room</span>
+io.to(socketId).emit(<span class="hljs-string">'ev'</span>, data);         <span class="hljs-comment">// → specific client</span>
+socket.to(<span class="hljs-string">'room'</span>).emit(<span class="hljs-string">'ev'</span>, data);       <span class="hljs-comment">// → room except sender</span>
+
+<span class="hljs-comment">// Client</span>
+socket.emit(<span class="hljs-string">'ev'</span>, data);
+socket.on(<span class="hljs-string">'ev'</span>, callback);
+</div></code></pre>
+<h3 id="websocket-close-codes">WebSocket Close Codes</h3>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1000</td>
+<td>Normal closure</td>
+</tr>
+<tr>
+<td>1001</td>
+<td>Going away</td>
+</tr>
+<tr>
+<td>1002</td>
+<td>Protocol error</td>
+</tr>
+<tr>
+<td>1003</td>
+<td>Unsupported data</td>
+</tr>
+<tr>
+<td>1006</td>
+<td>Abnormal closure</td>
+</tr>
+<tr>
+<td>1007</td>
+<td>Invalid payload</td>
+</tr>
+<tr>
+<td>1008</td>
+<td>Policy violation</td>
+</tr>
+<tr>
+<td>1009</td>
+<td>Message too big</td>
+</tr>
+<tr>
+<td>1011</td>
+<td>Server error</td>
+</tr>
+</tbody>
+</table>
+<h3 id="key-npm-packages">Key npm Packages</h3>
+<table>
+<thead>
+<tr>
+<th>Package</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ws</code></td>
+<td>Low-level WebSocket server/client</td>
+</tr>
+<tr>
+<td><code>socket.io</code></td>
+<td>Full-featured WS framework</td>
+</tr>
+<tr>
+<td><code>express-ws</code></td>
+<td>Add WS routes to Express</td>
+</tr>
+<tr>
+<td><code>@socket.io/redis-adapter</code></td>
+<td>Scale Socket.IO across instances</td>
+</tr>
+<tr>
+<td><code>ioredis</code></td>
+<td>Redis client for Node.js</td>
+</tr>
+<tr>
+<td><code>jsonwebtoken</code></td>
+<td>JWT auth</td>
+</tr>
+<tr>
+<td><code>wscat</code></td>
+<td>CLI tool to test WS servers</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="further-reading">Further Reading</h2>
+<ul>
+<li><a href="https://tools.ietf.org/html/rfc6455">RFC 6455 — The WebSocket Protocol</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/WebSocket">MDN — WebSocket API</a></li>
+<li><a href="https://github.com/websockets/ws">ws Library GitHub</a></li>
+<li><a href="https://socket.io/docs/v4/">Socket.IO Documentation</a></li>
+<li><a href="https://owasp.org/www-community/attacks/WebSocket_Attack">WebSocket Security (OWASP)</a></li>
+<li><a href="https://hpbn.co/websocket/">High Performance Browser Networking — WebSocket chapter</a></li>
+</ul>
+<hr>
+<p><em>Happy hacking! WebSockets open the door to a whole class of real-time applications — now go build something awesome.</em> 🚀</p>
+
+</body>
+</html>
